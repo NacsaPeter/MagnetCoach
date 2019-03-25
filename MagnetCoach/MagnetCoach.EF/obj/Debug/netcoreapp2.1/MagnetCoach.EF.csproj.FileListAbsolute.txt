@@ -1,0 +1,6 @@
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.EF\bin\Debug\netcoreapp2.1\MagnetCoach.EF.deps.json
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.EF\bin\Debug\netcoreapp2.1\MagnetCoach.EF.dll
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.EF\obj\Debug\netcoreapp2.1\MagnetCoach.EF.csprojAssemblyReference.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.EF\obj\Debug\netcoreapp2.1\MagnetCoach.EF.csproj.CoreCompileInputs.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.EF\obj\Debug\netcoreapp2.1\MagnetCoach.EF.AssemblyInfoInputs.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.EF\obj\Debug\netcoreapp2.1\MagnetCoach.EF.AssemblyInfo.cs

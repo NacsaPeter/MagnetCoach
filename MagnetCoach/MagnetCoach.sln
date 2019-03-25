@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagnetCoach.Domain", "MagnetCoach.Domain\MagnetCoach.Domain.csproj", "{3BB9210F-AD40-4997-8503-FF7C25FF07DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagnetCoach.EF", "MagnetCoach.EF\MagnetCoach.EF.csproj", "{39C3D4BF-4911-43D2-BD1E-6AAF44D4898A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagnetCoach.Application", "MagnetCoach.Application\MagnetCoach.Application.csproj", "{1E0AE54D-0C8F-4767-9EA8-A1ECDD98B6F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagnetCoach.API", "MagnetCoach.API\MagnetCoach.API.csproj", "{925865D7-4865-4B17-B546-2B263072FBBE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BB9210F-AD40-4997-8503-FF7C25FF07DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BB9210F-AD40-4997-8503-FF7C25FF07DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BB9210F-AD40-4997-8503-FF7C25FF07DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BB9210F-AD40-4997-8503-FF7C25FF07DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39C3D4BF-4911-43D2-BD1E-6AAF44D4898A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39C3D4BF-4911-43D2-BD1E-6AAF44D4898A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39C3D4BF-4911-43D2-BD1E-6AAF44D4898A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39C3D4BF-4911-43D2-BD1E-6AAF44D4898A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E0AE54D-0C8F-4767-9EA8-A1ECDD98B6F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E0AE54D-0C8F-4767-9EA8-A1ECDD98B6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E0AE54D-0C8F-4767-9EA8-A1ECDD98B6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E0AE54D-0C8F-4767-9EA8-A1ECDD98B6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{925865D7-4865-4B17-B546-2B263072FBBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{925865D7-4865-4B17-B546-2B263072FBBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{925865D7-4865-4B17-B546-2B263072FBBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{925865D7-4865-4B17-B546-2B263072FBBE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {31DC71BD-07C5-42F7-829A-0EBF129E639F}
+	EndGlobalSection
+EndGlobal

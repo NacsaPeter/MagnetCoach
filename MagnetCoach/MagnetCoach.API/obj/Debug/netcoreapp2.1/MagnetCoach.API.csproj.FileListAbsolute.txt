@@ -1,0 +1,17 @@
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\bin\Debug\netcoreapp2.1\MagnetCoach.API.deps.json
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\bin\Debug\netcoreapp2.1\MagnetCoach.API.runtimeconfig.json
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\bin\Debug\netcoreapp2.1\MagnetCoach.API.runtimeconfig.dev.json
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\bin\Debug\netcoreapp2.1\MagnetCoach.API.dll
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\obj\Debug\netcoreapp2.1\MagnetCoach.API.csprojAssemblyReference.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\obj\Debug\netcoreapp2.1\MagnetCoach.API.csproj.CoreCompileInputs.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\obj\Debug\netcoreapp2.1\MagnetCoach.API.RazorAssemblyInfo.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\obj\Debug\netcoreapp2.1\MagnetCoach.API.RazorAssemblyInfo.cs
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\obj\Debug\netcoreapp2.1\MagnetCoach.API.AssemblyInfoInputs.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\obj\Debug\netcoreapp2.1\MagnetCoach.API.AssemblyInfo.cs
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\obj\Debug\netcoreapp2.1\MagnetCoach.API.RazorTargetAssemblyInfo.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\bin\Debug\netcoreapp2.1\MagnetCoach.API.pdb
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\obj\Debug\netcoreapp2.1\MagnetCoach.API.dll
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\obj\Debug\netcoreapp2.1\MagnetCoach.API.pdb
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\bin\Debug\netcoreapp2.1\MagnetCoach.Application.dll
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\bin\Debug\netcoreapp2.1\MagnetCoach.Application.pdb
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.API\obj\Debug\netcoreapp2.1\MagnetCoach.API.csproj.CopyComplete

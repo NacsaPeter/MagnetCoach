@@ -1,0 +1,9 @@
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Application\bin\Debug\netcoreapp2.1\MagnetCoach.Application.deps.json
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Application\bin\Debug\netcoreapp2.1\MagnetCoach.Application.dll
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Application\bin\Debug\netcoreapp2.1\MagnetCoach.Application.pdb
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Application\obj\Debug\netcoreapp2.1\MagnetCoach.Application.csprojAssemblyReference.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Application\obj\Debug\netcoreapp2.1\MagnetCoach.Application.csproj.CoreCompileInputs.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Application\obj\Debug\netcoreapp2.1\MagnetCoach.Application.AssemblyInfoInputs.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Application\obj\Debug\netcoreapp2.1\MagnetCoach.Application.AssemblyInfo.cs
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Application\obj\Debug\netcoreapp2.1\MagnetCoach.Application.dll
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Application\obj\Debug\netcoreapp2.1\MagnetCoach.Application.pdb
