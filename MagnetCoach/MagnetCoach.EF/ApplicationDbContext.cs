@@ -33,6 +33,64 @@ namespace MagnetCoach.EF
             builder.ApplyConfiguration(new PlayerConfiguration());
             builder.ApplyConfiguration(new SportConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
+
+            builder.Entity<Color>().HasData(new Color { Id = 1, ShirtColor = "Red", NumberColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 2, ShirtColor = "Blue", NumberColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 3, ShirtColor = "Green", NumberColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 4, ShirtColor = "Yellow", NumberColor = "Black" });
+            builder.Entity<Color>().HasData(new Color { Id = 5, ShirtColor = "Purple", NumberColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 6, ShirtColor = "Wihte", NumberColor = "Black" });
+            builder.Entity<Color>().HasData(new Color { Id = 7, ShirtColor = "Black", NumberColor = "White" });
+
+            builder.Entity<Sport>().HasData(new Sport {
+                Id = 1,
+                Sports = Domain.Enums.SportsEnum.Football,
+                Name = "Football",
+                MaxPlayers = 11,
+                HasGoalkeeper = true,
+                HasEmptyGoal = false
+            });
+
+            builder.Entity<Sport>().HasData(new Sport
+            {
+                Id = 2,
+                Sports = Domain.Enums.SportsEnum.Handball,
+                Name = "Handball",
+                MaxPlayers = 7,
+                HasGoalkeeper = true,
+                HasEmptyGoal = true
+            });
+
+            builder.Entity<Sport>().HasData(new Sport
+            {
+                Id = 3,
+                Sports = Domain.Enums.SportsEnum.Basketball,
+                Name = "Basketball",
+                MaxPlayers = 5,
+                HasGoalkeeper = false,
+                HasEmptyGoal = false
+            });
+
+            builder.Entity<Sport>().HasData(new Sport
+            {
+                Id = 4,
+                Sports = Domain.Enums.SportsEnum.IceHockey,
+                Name = "Ice Hockey",
+                MaxPlayers = 6,
+                HasGoalkeeper = true,
+                HasEmptyGoal = true
+            });
+
+            builder.Entity<User>().HasData(new User
+            {
+                Id = 1,
+                UserName = "TestUser1",
+                Name = "Test User",
+                Email = "testuser@test.com",
+                PasswordHash = "hash123",
+                Salt = "salt123",
+                BirthDay = new DateTime()
+            });
         }
     }
 }

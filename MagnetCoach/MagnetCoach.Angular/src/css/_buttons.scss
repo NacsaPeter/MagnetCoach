@@ -1,0 +1,15 @@
+.create-button {
+    background: limegreen;
+    color: white;
+}
+
+button.new-tactic {
+    margin: 0;
+    position: absolute;
+    top: 10px;
+    right: 40px;
+    padding: 5px 25px;
+    font-size: 14px;
+    font-weight: $semi-bold;
+    color: rgba(#000, 0.6);
+}

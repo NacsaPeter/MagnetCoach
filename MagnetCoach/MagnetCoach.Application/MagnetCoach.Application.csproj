@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="AppServices\" />
+    <ProjectReference Include="..\MagnetCoach.EF\MagnetCoach.EF.csproj" />
   </ItemGroup>
 
 </Project>

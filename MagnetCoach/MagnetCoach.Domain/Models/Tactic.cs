@@ -18,6 +18,7 @@ namespace MagnetCoach.Domain.Models
 
         public ArenaPartEnum ArenaPart { get; set; }
         public int PlayerSize { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<Frame> Frames { get; set; }
     }

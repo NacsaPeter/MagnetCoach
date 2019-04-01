@@ -522,6 +522,9 @@
         }
       },
       "MagnetCoach.Application/1.0.0": {
+        "dependencies": {
+          "MagnetCoach.EF": "1.0.0"
+        },
         "runtime": {
           "MagnetCoach.Application.dll": {}
         },
