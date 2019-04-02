@@ -19,10 +19,6 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 @import '_arena';
 @import '_buttons';
 
-.app-main {
-    height: calc(100vh - 100px);
-}
-
 * {
     font-family: 'Arial';
     padding: 0px;

@@ -12,21 +12,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>a</td>
-                <td>a</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>a</td>
-                <td>a</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+            <tr *ngFor="let item of list.items" (click)="navigateEdit(item.id)">
+                <td>{{ item.name }}</td>
+                <td>{{ item.sport }}</td>
+                <td>{{ item.arenaPart }}</td>
+                <td>{{ item.ownPlayers }}</td>
+                <td>{{ item.opponentPlayers }}</td>
+                <td><mat-icon>{{ item.emptyGoal ? 'check_box' : 'check_box_outline_blank' }}</mat-icon></td>
             </tr>
         </tbody>
     </table>

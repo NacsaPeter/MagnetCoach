@@ -1,0 +1,32 @@
+<div style="position: relative;">
+
+    <div class="pitch mat-elevation-z8" id="paper" [ngClass]="{
+            'football': tactic.sport === sports.football,
+            'basketball': tactic.sport === sports.basketball,
+            'handball': tactic.sport === sports.handball,
+            'ice-hockey': tactic.sport === sports.iceHockey,
+            'american-football': tactic.sport === sports.americanFootball,
+            'endzone': tactic.pitchPart === pitchParts.endzone
+        }"></div>
+
+    <div class="actions-container mat-elevation-z8">
+        <div>
+            <span style="margin-right: 5px;">Current frame: </span>
+            <button mat-icon-button (click)="changeFrameDown()">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            {{ tactic.frames.indexOf(currentFrame) + 1 }} / {{ tactic.frames.length }}
+            <button mat-icon-button (click)="changeFrameUp()">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+            <button mat-button (click)="addFrame()">Add frame</button>
+        </div>
+        <div style="margin-top: 20px;">
+            <span style="margin-right: 15px;">Show routes:</span>
+            <mat-checkbox [(ngModel)]="showRoutes" (change)="changeShowRoutes()"></mat-checkbox>
+        </div>
+        <div>
+            <button style="margin: 40px 0px 30px 330px;" mat-raised-button class="create-button">Save</button>
+        </div>
+    </div>
+</div>

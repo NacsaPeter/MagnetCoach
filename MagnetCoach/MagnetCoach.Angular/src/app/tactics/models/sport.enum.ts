@@ -2,7 +2,8 @@ export enum Sport {
     football,
     basketball,
     handball,
-    iceHockey
+    iceHockey,
+    americanFootball
 }
 
 export enum PitchPart {

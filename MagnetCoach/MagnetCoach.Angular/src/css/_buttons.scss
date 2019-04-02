@@ -1,13 +1,14 @@
 .create-button {
     background: limegreen;
     color: white;
+    padding: 3px 25px !important;
 }
 
 button.new-tactic {
     margin: 0;
     position: absolute;
     top: 10px;
-    right: 40px;
+    right: 50px;
     padding: 5px 25px;
     font-size: 14px;
     font-weight: $semi-bold;

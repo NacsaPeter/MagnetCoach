@@ -5,6 +5,7 @@
             'basketball': model.sport === sports.basketball,
             'handball': model.sport === sports.handball,
             'ice-hockey': model.sport === sports.iceHockey,
+            'american-football': model.sport === sports.americanFootball,
             'endzone': model.pitchPart === pitchParts.endzone
         }"></div>
     
@@ -16,6 +17,7 @@
                         <mat-option [value]="sports.basketball">Basketball</mat-option>
                         <mat-option [value]="sports.handball">Handball</mat-option>
                         <mat-option [value]="sports.iceHockey">Ice Hockey</mat-option>
+                        <mat-option [value]="sports.americanFootball">American Football</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field>
@@ -25,7 +27,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div style="margin-top: 20px;">
+            <div>
                 <mat-form-field style="margin-right: 20px;">
                     <mat-select placeholder="Select own team color" [(ngModel)]="currentFrame.ownTeam.color"
                         (selectionChange)="changeOwnTeamColor()">
@@ -43,7 +45,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div style="margin-top: 20px;">
+            <div>
                 <mat-form-field style="margin-right: 20px;">
                     <mat-select placeholder="Select team" [(ngModel)]="formationTeam">
                         <mat-option [value]="ownTeam">Own team</mat-option>
@@ -61,7 +63,7 @@
                     <mat-icon>send</mat-icon>
                 </button>
             </div>
-            <div style="margin-top: 40px;">
+            <div style="margin-top: 20px;">
                 <span style="margin-right: 15px;">Ball visible:</span>
                 <mat-checkbox [(ngModel)]="currentFrame.ball.visible" (change)="changeBallVisible()"></mat-checkbox>
             </div>
@@ -73,7 +75,7 @@
                 <span style="margin-right: 15px;">Opponent empty goal:</span>
                 <mat-checkbox [(ngModel)]="currentFrame.opponentTeam.emptyGoal" (change)="changeOpponentEmptyGoal()"></mat-checkbox>
             </div>
-            <div style="margin-top: 30px;">
+            <div style="margin-top: 20px;">
                 <span style="margin-right: 47px;">Own players:</span>
                 <button mat-icon-button (click)="removeOwnPlayer()">
                     <mat-icon>remove</mat-icon>
@@ -93,7 +95,7 @@
                     <mat-icon>add</mat-icon>
                 </button>
             </div>
-            <div style="margin-top: 30px;">
+            <div style="margin-top: 20px;">
                 <span style="margin-right: 15px;">Players' size:</span>
                 <button mat-mini-fab style="margin-right: 10px;" (click)="decreasePlayerSize()">
                     <mat-icon>remove</mat-icon>
@@ -110,7 +112,7 @@
                 </button>
             </div>
             <div>
-                <button style="margin: 90px 0px 30px 350px;" mat-raised-button class="create-button">Create</button>
+                <button style="margin: 40px 0px 30px 330px;" mat-raised-button class="create-button">Create</button>
             </div>
         </div>
     </div>

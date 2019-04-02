@@ -74,10 +74,22 @@ export class NewTacticPageComponent implements OnInit {
       lines: [1, 5, 1, 0]
     },
     {
-      id: 9,
+      id: 10,
       name: '6',
       sport: Sport.handball,
       lines: [1, 6, 0, 0]
+    },
+    {
+      id: 11,
+      name: '2-5-4',
+      sport: Sport.americanFootball,
+      lines: [0, 2, 5, 4]
+    },
+    {
+      id: 12,
+      name: '9-2',
+      sport: Sport.americanFootball,
+      lines: [0, 0, 2, 9]
     },
   ];
 
@@ -132,26 +144,6 @@ export class NewTacticPageComponent implements OnInit {
       gridSize: 1
     });
 
-    // const rect = new joint.shapes.basic.Rect({
-    //   position: { x: 100, y: 30 },
-    //   size: { width: 100, height: 30 },
-    //   attrs: { rect: { fill: 'blue' }, text: { text: 'my box', fill: 'white' } }
-    // });
-
-    // const rect2 = rect.clone() as joint.shapes.basic.Rect;
-    // rect2.translate(300);
-
-    // const link = new joint.dia.Link({
-    //   source: { id: rect.id },
-    //   target: { id: rect2.id }
-    // });
-
-    // const player = new joint.shapes.basic.Circle({
-    //   position: { x: 50, y: 50},
-    //   size: { width: 50, height: 50 },
-    //   attrs: { circle: { fill: 'red' }, text: { text: '10', fill: 'black' } }
-    // });
-
     this.ball = new joint.shapes.basic.Circle({
       position: { x: 482, y: 332 },
       size: { width: 30, height: 30},
@@ -159,9 +151,6 @@ export class NewTacticPageComponent implements OnInit {
     });
 
     this.model.frames.push(this.currentFrame);
-
-    // graph.addCells([rect, rect2, link]);
-    // this.graph.addCells(this.createTeam(11, 'red', 'white'));
   }
 
   private createTeam(numberOfPlayers: number, shirtColor: string, numberColor: string): any[] {
@@ -175,7 +164,7 @@ export class NewTacticPageComponent implements OnInit {
       const newPlayer = player.clone() as joint.shapes.basic.Circle;
       newPlayer.translate(0, (i - 1) * 60);
       newPlayer.attr('text/text', i);
-      if (i === 1 && this.model.sport !== Sport.basketball) {
+      if (i === 1 && !(this.model.sport === Sport.basketball || this.model.sport === Sport.americanFootball ) ) {
         newPlayer.attr('circle/fill', 'yellow');
         newPlayer.attr('text/fill', 'black');
       }
@@ -191,6 +180,7 @@ export class NewTacticPageComponent implements OnInit {
       case Sport.basketball: this.maxPlayers = 5; break;
       case Sport.handball: this.maxPlayers = 7; break;
       case Sport.iceHockey: this.maxPlayers = 6; break;
+      case Sport.americanFootball: this.maxPlayers = 11; break;
     }
     this.currentFrame.opponentTeam.numberOfPlayers = this.maxPlayers;
     this.currentFrame.ownTeam.numberOfPlayers = this.maxPlayers;
@@ -207,16 +197,6 @@ export class NewTacticPageComponent implements OnInit {
     this.graph.addCells(this.ownTeam);
     this.graph.addCells(this.opponentTeam);
     this.graph.addCell(this.ball);
-  }
-
-  test() {
-    // this.graph.getCell(this.opponentTeam[1]).translate(50);
-    // this.graph.getCell(this.opponentTeam[1]).attr('circle/opacity', 0);
-    // const link = new joint.shapes.standard.Link();
-    // link.source(this.opponentTeam[10]);
-    // link.target(this.ball);
-    // link.addTo(this.graph);
-    this.preservePositions();
   }
 
   changeOwnTeamColor() {
@@ -346,83 +326,6 @@ export class NewTacticPageComponent implements OnInit {
   decreaseBallSize() {
     const ballCell = this.graph.getCell(this.ball);
     this.ball.resize(ballCell.size().width - 1, ballCell.size().height - 1);
-  }
-
-  addFrame() {
-    this.preservePositions();
-    const newFrame = JSON.parse(JSON.stringify(this.model.frames[this.model.frames.length - 1]));
-    const tempFrame = JSON.parse(JSON.stringify(newFrame));
-    this.model.frames.push(newFrame);
-    this.currentFrame = newFrame;
-    this.model.frames[this.model.frames.length - 2] = tempFrame;
-    this.setPositions();
-  }
-
-  changeFrameUp() {
-    this.preservePositions();
-    if (this.currentFrame !== this.model.frames[this.model.frames.length - 1]) {
-      const tempFrame = JSON.parse(JSON.stringify(this.currentFrame));
-      const tempFrameIndex = this.model.frames.indexOf(this.currentFrame);
-      this.currentFrame = this.model.frames[tempFrameIndex + 1];
-      this.model.frames[tempFrameIndex] = tempFrame;
-    }
-    this.setPositions();
-  }
-
-  changeFrameDown() {
-    this.preservePositions();
-    if (this.currentFrame !== this.model.frames[0]) {
-      const tempFrame = JSON.parse(JSON.stringify(this.currentFrame));
-      const tempFrameIndex = this.model.frames.indexOf(this.currentFrame);
-      this.currentFrame = this.model.frames[tempFrameIndex - 1];
-      this.model.frames[tempFrameIndex] = tempFrame;
-    }
-    this.setPositions();
-  }
-
-  private preservePositions() {
-    for (let i = 0; i < this.ownTeam.length; i++) {
-      const playerCell = this.graph.getCell(this.ownTeam[i]);
-      if (this.currentFrame.ownTeam.players.length <= i) {
-        const newPlayer: IPlayerViewModel = {
-          id: 0,
-          position: { x: 0, y: 0 }
-        };
-        this.currentFrame.ownTeam.players.push(newPlayer);
-      }
-      this.currentFrame.ownTeam.players[i].position = {...playerCell.get('position')};
-    }
-    for (let i = 0; i < this.opponentTeam.length; i++) {
-      const playerCell = this.graph.getCell(this.opponentTeam[i]);
-      if (this.currentFrame.opponentTeam.players.length <= i) {
-        const newPlayer: IPlayerViewModel = {
-          id: 0,
-          position: { x: 0, y: 0 }
-        };
-        this.currentFrame.opponentTeam.players.push(newPlayer);
-      }
-      this.currentFrame.opponentTeam.players[i].position = {...playerCell.get('position')};
-    }
-    const ballCell = this.graph.getCell(this.ball);
-    this.currentFrame.ball.position = {...ballCell.prop('position')};
-  }
-
-  private setPositions() {
-    for (let i = 0; i < this.currentFrame.ownTeam.players.length; i++) {
-      const playerCell = this.graph.getCell(this.ownTeam[i]);
-      const position = this.currentFrame.ownTeam.players[i].position;
-      playerCell.position(0, 0);
-      playerCell.translate(position.x, position.y);
-    }
-    for (let i = 0; i < this.currentFrame.opponentTeam.players.length; i++) {
-      const playerCell = this.graph.getCell(this.opponentTeam[i]);
-      const position = {...this.currentFrame.opponentTeam.players[i].position};
-      playerCell.position(0, 0);
-      playerCell.translate(position.x, position.y);
-    }
-    const ballCell = this.graph.getCell(this.ball);
-    ballCell.position(0, 0);
-    ballCell.translate(this.currentFrame.ball.position.x, this.currentFrame.ball.position.y);
   }
 
 }

@@ -40,6 +40,14 @@
 	}
 }
 
+.american-football {
+	background-image: url(src/assets/american-football-field.jpg);
+
+	&.endzone {
+		background-image: url(src/assets/american-football-field-part.jpg);
+	}
+}
+
 .actions-container {
 	height: 85vh;
 	position: absolute;

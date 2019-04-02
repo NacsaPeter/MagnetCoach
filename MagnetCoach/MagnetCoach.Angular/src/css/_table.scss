@@ -5,20 +5,21 @@
         border-spacing: 0px;
         margin: 0;
         position: absolute;
-        top: 160px;
+        top: 80px;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%);
+        background: white;
         
         thead {
-            background: white;
             
             th {
-                padding: 20px;
-                min-width: 200px;
+                padding: 20px 30px;
+                min-width: 180px;
                 font-size: 14px;
                 font-weight: $semi-bold;
                 color: rgba(#000, 0.6);
                 border-bottom: 1px solid lightgray;
+                text-align: left;
             }
         }
 
@@ -26,17 +27,15 @@
             
             tr {
                 
-                &:nth-child(even) {
-                    background: white
-                }
-                
-                &:nth-child(odd) {
-                    background: white;
+                td {
+                    padding: 20px 30px;
+                    border-bottom: 1px solid lightgray;
+                    font-size: 13px;
                 }
 
-                td {
-                    padding: 15px 30px;
-                    border-bottom: 1px solid lightgray;
+                &:hover {
+                    cursor: pointer;
+                    box-shadow: 2px 3px 8px darkgray;
                 }
             }
         }
