@@ -34,6 +34,15 @@ namespace MagnetCoach.API
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            // Add Cors
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -56,6 +65,8 @@ namespace MagnetCoach.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Magnet Coach API V1");
                 c.RoutePrefix = string.Empty;
             });
+
+            app.UseCors("MyPolicy");
 
             if (env.IsDevelopment())
             {

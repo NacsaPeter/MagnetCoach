@@ -1,0 +1,70 @@
+.football {
+	// background-image: url(src/assets/football-pitch.jpg);
+	background-image: url(src/assets/full/football.png);
+
+	&.endzone {
+		background-image: url(src/assets/football-pitch-part.jpg);
+	}
+}
+
+.basketball {
+    // background-image: url(src/assets/basketball-court.jpg);
+	background-image: url(src/assets/full/basketball.png);
+
+	&.endzone {
+		background-image: url(src/assets/basketball-court-part.jpg);
+	}
+}
+
+.handball {
+    // background-image: url(src/assets/handball-court.png);
+	background-image: url(src/assets/full/handball.png);
+
+	&.endzone {
+		background-image: url(src/assets/handball-court-part.png);
+	}
+}
+
+.ice-hockey {
+    // background-image: url(src/assets/ice-hockey-rink.png);
+	background-image: url(src/assets/full/ice-hockey.png);    
+
+	&.endzone {
+		background-image: url(src/assets/ice-hockey-rink-part.png);
+	}
+}
+
+.american-football {
+    // background-image: url(src/assets/american-football-field.jpg);
+	background-image: url(src/assets/full/american-football.png);
+
+	&.endzone {
+		background-image: url(src/assets/american-football-field-part.jpg);
+	}
+}
+
+.floorball {
+	background-image: url(src/assets/full/floorball.png);
+}
+
+.futsal {
+	background-image: url(src/assets/full/futsal.png);
+}
+
+.lawn-hockey {
+	background-image: url(src/assets/full/lawn-hockey.png);
+}
+
+.rugby {
+	background-image: url(src/assets/full/rugby.png);
+}
+
+.waterpolo {
+	background-image: url(src/assets/full/waterpolo.png);
+}
+
+.main-image {
+	display: inline-block;
+	width: 260px;
+	margin: 10px 20px;
+}

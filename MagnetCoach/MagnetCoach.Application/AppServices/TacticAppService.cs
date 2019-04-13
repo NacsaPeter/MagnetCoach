@@ -22,9 +22,9 @@ namespace MagnetCoach.Application.AppServices
 
         public async Task<UserTacticListDto> GetTacticsAsync(int userId)
         {
-            var user = await context.Users
+            var user = context.Users
                 .Where(x => x.Id == userId)
-                .SingleOrDefaultAsync();
+                .SingleOrDefault();
 
             var tactics = await context.Tactics
                 .Include(x => x.Sport)
@@ -38,7 +38,8 @@ namespace MagnetCoach.Application.AppServices
                 UserName = user.Name,
                 UserTactics = tactics.Select(x => new UserTacticListItemDto
                 {
-                    ArenaPart = (ArenaPartTypeEnum)Enum.Parse(typeof(ArenaPartTypeEnum), x.ArenaPart.ToString()),
+                    // ArenaPart = (ArenaPartTypeEnum)Enum.Parse(typeof(ArenaPartTypeEnum), x.ArenaPart.ToString()),
+                    ArenaPart = x.ArenaPart.ToString(),
                     Sport = x.Sport.Name,
                     TacticId = x.Id,
                     TacticName = x.Name

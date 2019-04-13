@@ -8,46 +8,6 @@
 	background-color: #FFF;
 }
 
-.football {
-	background-image: url(src/assets/football-pitch.jpg);
-
-	&.endzone {
-		background-image: url(src/assets/football-pitch-part.jpg);
-	}
-}
-
-.basketball {
-	background-image: url(src/assets/basketball-court.jpg);
-
-	&.endzone {
-		background-image: url(src/assets/basketball-court-part.jpg);
-	}
-}
-
-.handball {
-	background-image: url(src/assets/handball-court.png);
-
-	&.endzone {
-		background-image: url(src/assets/handball-court-part.png);
-	}
-}
-
-.ice-hockey {
-	background-image: url(src/assets/ice-hockey-rink.png);
-
-	&.endzone {
-		background-image: url(src/assets/ice-hockey-rink-part.png);
-	}
-}
-
-.american-football {
-	background-image: url(src/assets/american-football-field.jpg);
-
-	&.endzone {
-		background-image: url(src/assets/american-football-field-part.jpg);
-	}
-}
-
 .actions-container {
 	height: 85vh;
 	position: absolute;

@@ -91,6 +91,12 @@ export class NewTacticPageComponent implements OnInit {
       sport: Sport.americanFootball,
       lines: [0, 0, 2, 9]
     },
+    {
+      id: 13,
+      name: '3-5-7',
+      sport: Sport.rugby,
+      lines: [0, 0, 3, 5, 7]
+    },
   ];
 
   ownTeam: any[];
@@ -164,7 +170,8 @@ export class NewTacticPageComponent implements OnInit {
       const newPlayer = player.clone() as joint.shapes.basic.Circle;
       newPlayer.translate(0, (i - 1) * 60);
       newPlayer.attr('text/text', i);
-      if (i === 1 && !(this.model.sport === Sport.basketball || this.model.sport === Sport.americanFootball ) ) {
+      if (i === 1 &&
+        !(this.model.sport === Sport.basketball || this.model.sport === Sport.americanFootball || this.model.sport === Sport.rugby) ) {
         newPlayer.attr('circle/fill', 'yellow');
         newPlayer.attr('text/fill', 'black');
       }
@@ -181,6 +188,11 @@ export class NewTacticPageComponent implements OnInit {
       case Sport.handball: this.maxPlayers = 7; break;
       case Sport.iceHockey: this.maxPlayers = 6; break;
       case Sport.americanFootball: this.maxPlayers = 11; break;
+      case Sport.futsal: this.maxPlayers = 5; break;
+      case Sport.floorball: this.maxPlayers = 6; break;
+      case Sport.rugby: this.maxPlayers = 15; break;
+      case Sport.lawnHockey: this.maxPlayers = 11; break;
+      case Sport.waterpolo: this.maxPlayers = 7; break;
     }
     this.currentFrame.opponentTeam.numberOfPlayers = this.maxPlayers;
     this.currentFrame.ownTeam.numberOfPlayers = this.maxPlayers;

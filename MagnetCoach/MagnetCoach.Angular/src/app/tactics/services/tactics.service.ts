@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
-import { ITacticsListViewModel } from '../models/tactics-list.model';
+import { delay, map } from 'rxjs/operators';
+import { ITacticsListViewModel, ITacticsListItemViewModel } from '../models/tactics-list.model';
 import { ITacticViewModel, Sport, PitchPart } from '../models/sport.enum';
+import { HttpClient } from '@angular/common/http';
+import { IUserTacticListDto, IUserTacticListItemDto } from '../dtos/tactics-list-dtos.model';
 
 const listMock: ITacticsListViewModel = {
     userId: 1,
@@ -196,10 +198,24 @@ const tacticMock: ITacticViewModel = {
 export class TacticsService {
 
     constructor(
+        private http: HttpClient,
     ) { }
 
     getTactics = (userId: number): Observable<ITacticsListViewModel> =>
-        of(listMock).pipe(delay(500))
+        this.http.get<IUserTacticListDto>(`https://localhost:5001/api/tactic/${userId}`).pipe(
+            map((dto: IUserTacticListDto): ITacticsListViewModel => ({
+                userId: dto.userId,
+                items: dto.userTactics.map((item: IUserTacticListItemDto): ITacticsListItemViewModel => ({
+                    id: item.tacticId,
+                    name: item.tacticName,
+                    sport: item.sport,
+                    arenaPart: item.arenaPart,
+                    ownPlayers: item.ownPlayers,
+                    opponentPlayers: item.opponentPlayers,
+                    emptyGoal: item.isEmptyGoal
+                }))
+            }))
+        )
 
     getTactic = (id: number): Observable<ITacticViewModel> =>
         of(tacticMock)

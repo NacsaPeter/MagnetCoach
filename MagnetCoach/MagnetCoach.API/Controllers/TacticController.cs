@@ -27,9 +27,9 @@ namespace MagnetCoach.API.Controllers
         }
 
         [HttpGet("{userId}")]
-        public ActionResult<UserTacticListDto> GetTactics(int userId)
+        public async Task<ActionResult<UserTacticListDto>> GetTactics(int userId)
         {
-            return Ok(tacticAppService.GetTacticsAsync(userId));
+            return Ok(await tacticAppService.GetTacticsAsync(userId));
         }
     }
 }

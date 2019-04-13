@@ -18,6 +18,7 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 @import '_tactics';
 @import '_arena';
 @import '_buttons';
+@import '_picture';
 
 * {
     font-family: 'Arial';
