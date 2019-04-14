@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { ITacticsListViewModel, ITacticsListItemViewModel } from '../models/tactics-list.model';
-import { ITacticViewModel, Sport, PitchPart } from '../models/sport.enum';
-import { HttpClient } from '@angular/common/http';
+import { ITacticViewModel, ICreateTacticViewModel, IPlayerViewModel } from '../models/sport.enum';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IUserTacticListDto, IUserTacticListItemDto } from '../dtos/tactics-list-dtos.model';
+import { ICreateTacticDto, ICreatePlayerDto } from '../dtos/create-tactic-dto.model';
 
 const listMock: ITacticsListViewModel = {
     userId: 1,
@@ -77,8 +78,8 @@ const listMock: ITacticsListViewModel = {
 
 const tacticMock: ITacticViewModel = {
     id: 1,
-    sport: Sport.football,
-    pitchPart: PitchPart.full,
+    sportId: 1,
+    pitchPart: 'Full',
     playerSize: 50,
     frames: [
         {
@@ -86,106 +87,129 @@ const tacticMock: ITacticViewModel = {
             ball: {
                 size: 30,
                 position: { x: 482, y: 332 },
-                visible: true
+                visible: true,
+                color: null
             },
             ownTeam: {
                 id: 1,
-                color: 'red',
+                color: null,
                 numberOfPlayers: 0,
                 players: [
                     {
                         id: 1,
+                        number: 1,
                         position: { x: 50, y: 325 }
                     },
                     {
                         id: 2,
+                        number: 2,
                         position: { x: 150, y: 62 }
                     },
                     {
                         id: 3,
+                        number: 3,
                         position: { x: 150, y: 237 }
                     },
                     {
                         id: 4,
+                        number: 4,
                         position: { x: 150, y: 412 }
                     },
                     {
                         id: 5,
+                        number: 5,
                         position: { x: 150, y: 587 }
                     },
                     {
                         id: 6,
+                        number: 6,
                         position: { x: 275, y: 62 }
                     },
                     {
                         id: 7,
+                        number: 7,
                         position: { x: 275, y: 237 }
                     },
                     {
                         id: 8,
+                        number: 8,
                         position: { x: 275, y: 412 }
                     },
                     {
                         id: 9,
+                        number: 9,
                         position: { x: 275, y: 587 }
                     },
                     {
                         id: 10,
+                        number: 10,
                         position: { x: 375, y: 237 }
                     },
                     {
                         id: 11,
+                        number: 11,
                         position: { x: 375, y: 412 }
                     },
                 ]
             },
             opponentTeam: {
                 id: 2,
-                color: 'blue',
+                color: null,
                 numberOfPlayers: 0,
                 players: [
                     {
                         id: 12,
+                        number: 1,
                         position: { x: 1000 - 75, y: 325 }
                     },
                     {
                         id: 13,
+                        number: 2,
                         position: { x: 1000 - 200, y: 62 }
                     },
                     {
                         id: 14,
+                        number: 3,
                         position: { x: 1000 - 200, y: 237 }
                     },
                     {
                         id: 15,
+                        number: 4,
                         position: { x: 1000 - 200, y: 412 }
                     },
                     {
                         id: 16,
+                        number: 5,
                         position: { x: 1000 - 200, y: 587 }
                     },
                     {
                         id: 17,
+                        number: 6,
                         position: { x: 1000 - 325, y: 62 }
                     },
                     {
                         id: 18,
+                        number: 7,
                         position: { x: 1000 - 325, y: 237 }
                     },
                     {
                         id: 19,
+                        number: 8,
                         position: { x: 1000 - 325, y: 412 }
                     },
                     {
                         id: 20,
+                        number: 9,
                         position: { x: 1000 - 325, y: 587 }
                     },
                     {
                         id: 21,
+                        number: 10,
                         position: { x: 1000 - 425, y: 237 }
                     },
                     {
                         id: 22,
+                        number: 11,
                         position: { x: 1000 - 425, y: 412 }
                     },
                 ]
@@ -216,6 +240,52 @@ export class TacticsService {
                 }))
             }))
         )
+
+    createTactic = (tactic: ICreateTacticViewModel): Observable<any> => {
+        const dto: ICreateTacticDto = {
+            userId: 1,
+            name: tactic.name,
+            sportId: tactic.sportId,
+            arenaPart: tactic.pitchPart,
+            playerSize: tactic.playerSize,
+            ball: {
+                isVisible: tactic.frame.ball.visible,
+                size: tactic.frame.ball.size,
+                position: {
+                    x: tactic.frame.ball.position.x,
+                    y: tactic.frame.ball.position.y
+                }
+            },
+            ownTeam: {
+                colorId: tactic.frame.ownTeam.color.id,
+                goalkeeperColorId: tactic.frame.ownTeam.goalKeeperColor.id,
+                emptyGoal: tactic.frame.ownTeam.emptyGoal,
+                players: tactic.frame.ownTeam.players.map((player: IPlayerViewModel): ICreatePlayerDto => ({
+                    number: player.number,
+                    position: {
+                        x: player.position.x,
+                        y: player.position.y
+                    }
+                }))
+            },
+            opponentTeam: {
+                colorId: tactic.frame.opponentTeam.color.id,
+                goalkeeperColorId: tactic.frame.opponentTeam.goalKeeperColor.id,
+                emptyGoal: tactic.frame.opponentTeam.emptyGoal,
+                players: tactic.frame.opponentTeam.players.map((player: IPlayerViewModel): ICreatePlayerDto => ({
+                    number: player.number,
+                    position: {
+                        x: player.position.x,
+                        y: player.position.y
+                    }
+                }))
+            }
+        };
+        const httpOptions = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+        };
+        return this.http.post<any>(`https://localhost:5001/api/tactic`, dto, httpOptions);
+    }
 
     getTactic = (id: number): Observable<ITacticViewModel> =>
         of(tacticMock)

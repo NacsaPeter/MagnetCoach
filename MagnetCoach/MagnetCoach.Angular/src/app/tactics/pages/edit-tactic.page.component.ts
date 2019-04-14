@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as jQuery from 'jquery';
 import * as _ from 'lodash';
 import * as joint from 'node_modules/jointjs/dist/joint.js';
-import { IFrameViewModel, ITacticViewModel, Sport, PitchPart, ITeamViewModel, IPlayerViewModel } from '../models/sport.enum';
+import { IFrameViewModel, ITacticViewModel, ITeamViewModel, IPlayerViewModel } from '../models/sport.enum';
 import { TacticsService } from '../services/tactics.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,9 +10,6 @@ import { ActivatedRoute } from '@angular/router';
     templateUrl: './edit-tactic.page.component.html'
 })
 export class EditTacticPageComponent implements OnInit {
-
-    sports = Sport;
-    pitchParts = PitchPart;
 
     graph: any;
     paperWidth: number;
@@ -156,6 +153,7 @@ export class EditTacticPageComponent implements OnInit {
             if (this.currentFrame.ownTeam.players.length <= i) {
             const newPlayer: IPlayerViewModel = {
                 id: 0,
+                number: i + 1,
                 position: { x: 0, y: 0 }
             };
             this.currentFrame.ownTeam.players.push(newPlayer);
@@ -167,6 +165,7 @@ export class EditTacticPageComponent implements OnInit {
             if (this.currentFrame.opponentTeam.players.length <= i) {
             const newPlayer: IPlayerViewModel = {
                 id: 0,
+                number: i + 1,
                 position: { x: 0, y: 0 }
             };
             this.currentFrame.opponentTeam.players.push(newPlayer);

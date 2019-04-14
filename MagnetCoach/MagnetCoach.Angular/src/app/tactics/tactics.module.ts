@@ -6,6 +6,7 @@ import { TacticsListPageComponent } from './pages/tactics-list.page.component';
 import { NewTacticPageComponent } from './pages/new-tactic.page.component';
 import { TacticsService } from './services/tactics.service';
 import { EditTacticPageComponent } from './pages/edit-tactic.page.component';
+import { SportsService } from './services/sports.service';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { EditTacticPageComponent } from './pages/edit-tactic.page.component';
   ],
   providers: [
     TacticsService,
+    SportsService,
   ]
 })
 export class TacticsModule { }

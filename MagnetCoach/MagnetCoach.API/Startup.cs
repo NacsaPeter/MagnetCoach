@@ -31,6 +31,7 @@ namespace MagnetCoach.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ITacticAppService, TacticAppService>();
+            services.AddTransient<ISportAppService, SportAppService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

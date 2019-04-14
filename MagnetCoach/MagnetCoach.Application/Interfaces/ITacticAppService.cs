@@ -9,5 +9,6 @@ namespace MagnetCoach.Application.Interfaces
     public interface ITacticAppService
     {
         Task<UserTacticListDto> GetTacticsAsync(int userId);
+        Task CreateTacticAsync(CreateTacticDto dto);
     }
 }

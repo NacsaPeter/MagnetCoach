@@ -21,9 +21,9 @@ namespace MagnetCoach.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateTactic([FromBody]TacticCreateDto tactic)
+        public async Task CreateTactic([FromBody]CreateTacticDto tactic)
         {
-            throw new NotImplementedException();
+            await tacticAppService.CreateTacticAsync(tactic);
         }
 
         [HttpGet("{userId}")]

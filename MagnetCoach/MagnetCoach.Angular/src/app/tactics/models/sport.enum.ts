@@ -1,34 +1,26 @@
-export enum Sport {
-    football,
-    basketball,
-    handball,
-    iceHockey,
-    americanFootball,
-    futsal,
-    floorball,
-    rugby,
-    waterpolo,
-    lawnHockey
-}
-
-export enum PitchPart {
-    full,
-    endzone
-}
+import { IColorViewModel } from './sports.model';
 
 export interface IFormationViewModel {
     id: number;
     name: string;
-    sport: Sport;
     lines: number[];
 }
 
 export interface ITacticViewModel {
     id: number;
-    sport: Sport;
-    pitchPart: PitchPart;
+    sportId: number;
+    pitchPart: string;
     playerSize: number;
     frames: IFrameViewModel[];
+}
+
+export interface ICreateTacticViewModel {
+    id: number;
+    name: string;
+    sportId: number;
+    pitchPart: string;
+    playerSize: number;
+    frame: IFrameViewModel;
 }
 
 export interface IFrameViewModel {
@@ -40,7 +32,8 @@ export interface IFrameViewModel {
 
 export interface ITeamViewModel {
     id: number;
-    color: string;
+    color: IColorViewModel;
+    goalKeeperColor?: IColorViewModel;
     numberOfPlayers: number;
     emptyGoal?: boolean;
     players: IPlayerViewModel[];
@@ -48,6 +41,7 @@ export interface ITeamViewModel {
 
 export interface IPlayerViewModel {
     id: number;
+    number: number;
     position: IPositionViewModel;
 }
 
@@ -55,6 +49,7 @@ export interface IBallViewModel {
     size: number;
     position: IPositionViewModel;
     visible: boolean;
+    color: IColorViewModel;
 }
 
 export interface IPositionViewModel {
