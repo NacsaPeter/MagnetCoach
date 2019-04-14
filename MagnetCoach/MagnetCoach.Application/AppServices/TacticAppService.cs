@@ -1,4 +1,5 @@
-﻿using MagnetCoach.Application.Dtos.Tactic;
+﻿using MagnetCoach.Application.Dtos.Sport;
+using MagnetCoach.Application.Dtos.Tactic;
 using MagnetCoach.Application.Enums;
 using MagnetCoach.Application.Interfaces;
 using MagnetCoach.Domain.Enums;
@@ -86,6 +87,115 @@ namespace MagnetCoach.Application.AppServices
 
             context.Frames.Add(frame);
             await context.SaveChangesAsync();
+        }
+
+        public async Task<TacticDto> GetTacticAsync(int tacticId)
+        {
+            var tactic = await context.Tactics
+                .Include(x => x.Sport)
+                .Where(x => x.Id == tacticId)
+                .SingleOrDefaultAsync();
+
+            var frames = await context.Frames
+                .Include(x => x.OpponentTeam)
+                    .ThenInclude(x => x.Players)
+                .Include(x => x.OpponentTeam)
+                    .ThenInclude(x => x.PlayerColor)
+                .Include(x => x.OpponentTeam)
+                    .ThenInclude(x => x.GoalKeeperColor)
+                .Include(x => x.OwnTeam)
+                    .ThenInclude(x => x.Players)
+                .Include(x => x.OwnTeam)
+                    .ThenInclude(x => x.PlayerColor)
+                .Include(x => x.OwnTeam)
+                    .ThenInclude(x => x.GoalKeeperColor)
+                .Include(x => x.Ball)
+                .Where(x => x.TacticId == tacticId)
+                .ToListAsync();
+
+            return new TacticDto
+            {
+                Id = tactic.Id,
+                ArenaPart = tactic.ArenaPart == ArenaPartEnum.Endzone ? "Endzone" : "Full",
+                PlayerSize = tactic.PlayerSize,
+                SportName = tactic.Sport.Name,
+                HasGoalkeeper = tactic.Sport.HasGoalkeeper,
+                Frames = frames.Select(x => new FrameDto
+                {
+                    Id = x.Id,
+                    Ball = new BallDto
+                    {
+                        Id = x.BallId,
+                        IsVisible = x.Ball.IsVisible,
+                        Size = x.Ball.Size,
+                        Position = new PositionDto
+                        {
+                            X = x.Ball.Position.PositionX,
+                            Y = x.Ball.Position.PositionY
+                        },
+                        Color = new ColorDto
+                        {
+                            Id = 0,
+                            NumberColor = "Black",
+                            ShirtColor = "Black"
+                        }
+                    },
+                    OwnTeam = new TeamDto
+                    {
+                        Id = x.OwnTeamId,
+                        EmptyGoal = x.OwnTeam.EmptyGoal,
+                        Color = new ColorDto
+                        {
+                            Id = x.OwnTeam.PlayerColor.Id,
+                            NumberColor = x.OwnTeam.PlayerColor.NumberColor,
+                            ShirtColor = x.OwnTeam.PlayerColor.ShirtColor
+                        },
+                        GoalkeeperColor = new ColorDto
+                        {
+                            Id = x.OwnTeam.GoalKeeperColor.Id,
+                            NumberColor = x.OwnTeam.GoalKeeperColor.NumberColor,
+                            ShirtColor = x.OwnTeam.GoalKeeperColor.ShirtColor
+                        },
+                        Players = x.OwnTeam.Players.Select(y => new PlayerDto
+                        {
+                            Id = y.Id,
+                            Number = y.Number,
+                            Position = new PositionDto
+                            {
+                                X = y.Position.PositionX,
+                                Y = y.Position.PositionY
+                            }
+                        }).ToList()
+                    },
+                    OpponentTeam = new TeamDto
+                    {
+                        Id = x.OpponentTeam.Id,
+                        EmptyGoal = x.OpponentTeam.EmptyGoal,
+                        Color = new ColorDto
+                        {
+                            Id = x.OpponentTeam.PlayerColor.Id,
+                            NumberColor = x.OpponentTeam.PlayerColor.NumberColor,
+                            ShirtColor = x.OpponentTeam.PlayerColor.ShirtColor
+                        },
+                        GoalkeeperColor = new ColorDto
+                        {
+                            Id = x.OpponentTeam.GoalKeeperColor.Id,
+                            NumberColor = x.OpponentTeam.GoalKeeperColor.NumberColor,
+                            ShirtColor = x.OpponentTeam.GoalKeeperColor.ShirtColor
+                        },
+                        Players = x.OpponentTeam.Players.Select(y => new PlayerDto
+                        {
+                            Id = y.Id,
+                            Number = y.Number,
+                            Position = new PositionDto
+                            {
+                                X = y.Position.PositionX,
+                                Y = y.Position.PositionY
+                            }
+                        }).ToList()
+                    }
+                }).ToList()
+            };
         }
 
         public async Task<UserTacticListDto> GetTacticsAsync(int userId)

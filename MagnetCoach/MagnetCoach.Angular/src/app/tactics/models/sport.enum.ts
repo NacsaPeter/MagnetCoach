@@ -8,7 +8,8 @@ export interface IFormationViewModel {
 
 export interface ITacticViewModel {
     id: number;
-    sportId: number;
+    sportName: string;
+    hasGoalkeeper: boolean;
     pitchPart: string;
     playerSize: number;
     frames: IFrameViewModel[];

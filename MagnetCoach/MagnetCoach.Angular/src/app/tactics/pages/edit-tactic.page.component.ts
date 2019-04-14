@@ -43,17 +43,18 @@ export class EditTacticPageComponent implements OnInit {
           gridSize: 1
         });
 
-        this.service.getTactic(+this.route.snapshot.paramMap.get('id')).subscribe(res => this.tactic = res);
-        this.currentFrame = this.tactic.frames[0];
-
-        this.setUpFrame();
+        this.service.getTactic(1, +this.route.snapshot.paramMap.get('id')).subscribe(res => {
+            this.tactic = res;
+            this.currentFrame = this.tactic.frames[0];
+            this.setUpFrame();
+        });
     }
 
     private setUpFrame() {
         this.ball = new joint.shapes.basic.Circle({
             position: { ...this.currentFrame.ball.position },
             size: { width: this.currentFrame.ball.size, height: this.currentFrame.ball.size },
-            attrs: { circle: { fill: 'black', opacity: this.currentFrame.ball.visible ? 1 : 0 } }
+            attrs: { circle: { fill: this.currentFrame.ball.color.shirtColor, opacity: this.currentFrame.ball.visible ? 1 : 0 } }
         });
         this.ownTeam = this.createTeam(this.currentFrame.ownTeam);
         this.opponentTeam = this.createTeam(this.currentFrame.opponentTeam);
@@ -68,15 +69,15 @@ export class EditTacticPageComponent implements OnInit {
         const player = new joint.shapes.basic.Circle({
           position: { x: 0, y: 0},
           size: { width: this.tactic.playerSize, height: this.tactic.playerSize },
-          attrs: { circle: { fill: team.color }, text: { text: '0', fill: 'white' } }
+          attrs: { circle: { fill: team.color.shirtColor }, text: { text: '0', fill: team.color.numberColor } }
         });
         for (let i = 1; i <= team.players.length; i++) {
           const newPlayer = player.clone() as joint.shapes.basic.Circle;
           newPlayer.translate(team.players[i - 1].position.x, team.players[i - 1].position.y);
-          newPlayer.attr('text/text', i);
-          if (i === 1 && !team.emptyGoal) {
-            newPlayer.attr('circle/fill', 'yellow');
-            newPlayer.attr('text/fill', 'black');
+          newPlayer.attr('text/text', team.players[i - 1].number);
+          if (this.tactic.hasGoalkeeper && !team.emptyGoal && team.players[i - 1].number === 1) {
+            newPlayer.attr('circle/fill', team.goalKeeperColor.shirtColor);
+            newPlayer.attr('text/fill', team.goalKeeperColor.numberColor);
           }
           gteam.push(newPlayer);
         }
@@ -151,24 +152,24 @@ export class EditTacticPageComponent implements OnInit {
         for (let i = 0; i < this.ownTeam.length; i++) {
             const playerCell = this.graph.getCell(this.ownTeam[i]);
             if (this.currentFrame.ownTeam.players.length <= i) {
-            const newPlayer: IPlayerViewModel = {
-                id: 0,
-                number: i + 1,
-                position: { x: 0, y: 0 }
-            };
-            this.currentFrame.ownTeam.players.push(newPlayer);
+                const newPlayer: IPlayerViewModel = {
+                    id: 0,
+                    number: i + 1,
+                    position: { x: 0, y: 0 }
+                };
+                this.currentFrame.ownTeam.players.push(newPlayer);
             }
             this.currentFrame.ownTeam.players[i].position = {...playerCell.get('position')};
         }
         for (let i = 0; i < this.opponentTeam.length; i++) {
             const playerCell = this.graph.getCell(this.opponentTeam[i]);
             if (this.currentFrame.opponentTeam.players.length <= i) {
-            const newPlayer: IPlayerViewModel = {
-                id: 0,
-                number: i + 1,
-                position: { x: 0, y: 0 }
-            };
-            this.currentFrame.opponentTeam.players.push(newPlayer);
+                const newPlayer: IPlayerViewModel = {
+                    id: 0,
+                    number: i + 1,
+                    position: { x: 0, y: 0 }
+                };
+                this.currentFrame.opponentTeam.players.push(newPlayer);
             }
             this.currentFrame.opponentTeam.players[i].position = {...playerCell.get('position')};
         }

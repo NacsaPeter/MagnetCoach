@@ -1,222 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { delay, map, tap } from 'rxjs/operators';
 import { ITacticsListViewModel, ITacticsListItemViewModel } from '../models/tactics-list.model';
-import { ITacticViewModel, ICreateTacticViewModel, IPlayerViewModel } from '../models/sport.enum';
+import { ITacticViewModel, ICreateTacticViewModel, IPlayerViewModel, IFrameViewModel } from '../models/sport.enum';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IUserTacticListDto, IUserTacticListItemDto } from '../dtos/tactics-list-dtos.model';
 import { ICreateTacticDto, ICreatePlayerDto } from '../dtos/create-tactic-dto.model';
-
-const listMock: ITacticsListViewModel = {
-    userId: 1,
-    items: [
-        {
-            id: 1,
-            name: 'Test Tactic 1',
-            sport: 'Football',
-            arenaPart: 'Full',
-            ownPlayers: 11,
-            opponentPlayers: 11,
-            emptyGoal: false
-        },
-        {
-            id: 2,
-            name: 'Test Tactic 2',
-            sport: 'Football',
-            arenaPart: 'Endzone',
-            ownPlayers: 8,
-            opponentPlayers: 7,
-            emptyGoal: false
-        },
-        {
-            id: 3,
-            name: 'Test Tactic 3',
-            sport: 'Handball',
-            arenaPart: 'Endzone',
-            ownPlayers: 7,
-            opponentPlayers: 7,
-            emptyGoal: true
-        },
-        {
-            id: 4,
-            name: 'Test Tactic 4',
-            sport: 'Ice Hockey',
-            arenaPart: 'Full',
-            ownPlayers: 6,
-            opponentPlayers: 6,
-            emptyGoal: false
-        },
-        {
-            id: 5,
-            name: 'Test Tactic 5',
-            sport: 'Football',
-            arenaPart: 'Full',
-            ownPlayers: 11,
-            opponentPlayers: 11,
-            emptyGoal: false
-        },
-        {
-            id: 6,
-            name: 'Test Tactic 6',
-            sport: 'Basketball',
-            arenaPart: 'Endzone',
-            ownPlayers: 5,
-            opponentPlayers: 5,
-            emptyGoal: false
-        },
-        {
-            id: 7,
-            name: 'Test Tactic 7',
-            sport: 'American Football',
-            arenaPart: 'Full',
-            ownPlayers: 11,
-            opponentPlayers: 11,
-            emptyGoal: false
-        },
-    ]
-};
-
-const tacticMock: ITacticViewModel = {
-    id: 1,
-    sportId: 1,
-    pitchPart: 'Full',
-    playerSize: 50,
-    frames: [
-        {
-            id: 1,
-            ball: {
-                size: 30,
-                position: { x: 482, y: 332 },
-                visible: true,
-                color: null
-            },
-            ownTeam: {
-                id: 1,
-                color: null,
-                numberOfPlayers: 0,
-                players: [
-                    {
-                        id: 1,
-                        number: 1,
-                        position: { x: 50, y: 325 }
-                    },
-                    {
-                        id: 2,
-                        number: 2,
-                        position: { x: 150, y: 62 }
-                    },
-                    {
-                        id: 3,
-                        number: 3,
-                        position: { x: 150, y: 237 }
-                    },
-                    {
-                        id: 4,
-                        number: 4,
-                        position: { x: 150, y: 412 }
-                    },
-                    {
-                        id: 5,
-                        number: 5,
-                        position: { x: 150, y: 587 }
-                    },
-                    {
-                        id: 6,
-                        number: 6,
-                        position: { x: 275, y: 62 }
-                    },
-                    {
-                        id: 7,
-                        number: 7,
-                        position: { x: 275, y: 237 }
-                    },
-                    {
-                        id: 8,
-                        number: 8,
-                        position: { x: 275, y: 412 }
-                    },
-                    {
-                        id: 9,
-                        number: 9,
-                        position: { x: 275, y: 587 }
-                    },
-                    {
-                        id: 10,
-                        number: 10,
-                        position: { x: 375, y: 237 }
-                    },
-                    {
-                        id: 11,
-                        number: 11,
-                        position: { x: 375, y: 412 }
-                    },
-                ]
-            },
-            opponentTeam: {
-                id: 2,
-                color: null,
-                numberOfPlayers: 0,
-                players: [
-                    {
-                        id: 12,
-                        number: 1,
-                        position: { x: 1000 - 75, y: 325 }
-                    },
-                    {
-                        id: 13,
-                        number: 2,
-                        position: { x: 1000 - 200, y: 62 }
-                    },
-                    {
-                        id: 14,
-                        number: 3,
-                        position: { x: 1000 - 200, y: 237 }
-                    },
-                    {
-                        id: 15,
-                        number: 4,
-                        position: { x: 1000 - 200, y: 412 }
-                    },
-                    {
-                        id: 16,
-                        number: 5,
-                        position: { x: 1000 - 200, y: 587 }
-                    },
-                    {
-                        id: 17,
-                        number: 6,
-                        position: { x: 1000 - 325, y: 62 }
-                    },
-                    {
-                        id: 18,
-                        number: 7,
-                        position: { x: 1000 - 325, y: 237 }
-                    },
-                    {
-                        id: 19,
-                        number: 8,
-                        position: { x: 1000 - 325, y: 412 }
-                    },
-                    {
-                        id: 20,
-                        number: 9,
-                        position: { x: 1000 - 325, y: 587 }
-                    },
-                    {
-                        id: 21,
-                        number: 10,
-                        position: { x: 1000 - 425, y: 237 }
-                    },
-                    {
-                        id: 22,
-                        number: 11,
-                        position: { x: 1000 - 425, y: 412 }
-                    },
-                ]
-            }
-        }
-    ]
-};
+import { ITacticDto, IFrameDto, IPlayerDto } from '../dtos/tactic-dto.model';
 
 @Injectable()
 export class TacticsService {
@@ -287,7 +77,78 @@ export class TacticsService {
         return this.http.post<any>(`https://localhost:5001/api/tactic`, dto, httpOptions);
     }
 
-    getTactic = (id: number): Observable<ITacticViewModel> =>
-        of(tacticMock)
+    getTactic = (userId: number, tacticId: number): Observable<ITacticViewModel> =>
+        this.http.get<ITacticDto>(`https://localhost:5001/api/tactic/${userId}/${tacticId}`).pipe(
+            tap(x => console.log(x)),
+            map((dto: ITacticDto): ITacticViewModel => ({
+                id: dto.id,
+                sportName: dto.sportName,
+                hasGoalkeeper: dto.hasGoalkeeper,
+                pitchPart: dto.arenaPart,
+                playerSize: dto.playerSize,
+                frames: dto.frames.map((frame: IFrameDto): IFrameViewModel => ({
+                    id: frame.id,
+                    ball: {
+                        size: frame.ball.size,
+                        position: {
+                            x: frame.ball.position.x,
+                            y: frame.ball.position.y
+                        },
+                        visible: frame.ball.isVisible,
+                        color: {
+                            id: frame.ball.color.id,
+                            numberColor: frame.ball.color.numberColor,
+                            shirtColor: frame.ball.color.shirtColor
+                        }
+                    },
+                    ownTeam: {
+                        id: frame.ownTeam.id,
+                        color: {
+                            id: frame.ownTeam.color.id,
+                            shirtColor: frame.ownTeam.color.shirtColor,
+                            numberColor: frame.ownTeam.color.numberColor
+                        },
+                        goalKeeperColor: {
+                            id: frame.ownTeam.goalkeeperColor.id,
+                            shirtColor: frame.ownTeam.goalkeeperColor.shirtColor,
+                            numberColor: frame.ownTeam.goalkeeperColor.numberColor
+                        },
+                        numberOfPlayers: frame.ownTeam.players.length,
+                        emptyGoal: frame.ownTeam.emptyGoal,
+                        players: frame.ownTeam.players.map((player: IPlayerDto): IPlayerViewModel => ({
+                            id: player.id,
+                            number: player.number,
+                            position: {
+                                x: player.position.x,
+                                y: player.position.y
+                            }
+                        }))
+                    },
+                    opponentTeam: {
+                        id: frame.opponentTeam.id,
+                        color: {
+                            id: frame.opponentTeam.color.id,
+                            shirtColor: frame.opponentTeam.color.shirtColor,
+                            numberColor: frame.opponentTeam.color.numberColor
+                        },
+                        goalKeeperColor: {
+                            id: frame.opponentTeam.goalkeeperColor.id,
+                            shirtColor: frame.opponentTeam.goalkeeperColor.shirtColor,
+                            numberColor: frame.opponentTeam.goalkeeperColor.numberColor
+                        },
+                        numberOfPlayers: frame.opponentTeam.players.length,
+                        emptyGoal: frame.opponentTeam.emptyGoal,
+                        players: frame.opponentTeam.players.map((player: IPlayerDto): IPlayerViewModel => ({
+                            id: player.id,
+                            number: player.number,
+                            position: {
+                                x: player.position.x,
+                                y: player.position.y
+                            }
+                        }))
+                    },
+                }))
+            }))
+        )
 
 }
