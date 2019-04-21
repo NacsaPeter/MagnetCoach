@@ -1,0 +1,32 @@
+.sign-up-container {
+    background: whitesmoke;
+    width: 300px;
+    padding: 60px 40px 80px;
+    position: absolute;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    max-height: 300px;
+    margin: auto;
+
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+.button-container {
+    position: relative;
+    height: 50px;
+
+    button {
+        position: absolute;
+        right: 0px;
+        left: 0px;
+        margin: auto;
+        width: 100px;
+        color: white;
+        text-shadow: 2px 3px 3px darkgray;
+        background: rgba(limegreen, 0.8);
+    }
+}

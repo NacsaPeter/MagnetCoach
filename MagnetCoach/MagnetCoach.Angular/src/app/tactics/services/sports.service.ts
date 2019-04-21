@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ISportsDto, IColorDto, ISportDetailsDto, IFormationDto } from '../dtos/sports-dto.model';
 import { ISportsViewModel, IColorViewModel, ISportDetailsViewModel, IFormationViewModel } from '../models/sports.model';
 
@@ -13,7 +13,9 @@ export class SportsService {
     ) { }
 
     getSports = (): Observable<ISportsViewModel> =>
-        this.http.get<ISportsDto>(`https://localhost:5001/api/sport`).pipe(
+        this.http.get<ISportsDto>(`https://localhost:5001/api/sport`,
+        { headers: new HttpHeaders({ Authorization: 'Bearer ' + localStorage.getItem('userToken')}) }
+        ).pipe(
             map((dto: ISportsDto): ISportsViewModel => ({
                 colors: dto.colors.map((color: IColorDto): IColorViewModel => ({
                     id: color.id,

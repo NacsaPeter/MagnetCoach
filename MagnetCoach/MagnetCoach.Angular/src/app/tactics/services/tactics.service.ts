@@ -16,7 +16,9 @@ export class TacticsService {
     ) { }
 
     getTactics = (userId: number): Observable<ITacticsListViewModel> =>
-        this.http.get<IUserTacticListDto>(`https://localhost:5001/api/tactic/${userId}`).pipe(
+        this.http.get<IUserTacticListDto>(`https://localhost:5001/api/tactic/${userId}`,
+            { headers: new HttpHeaders({ Authorization: 'Bearer ' + localStorage.getItem('userToken')}) }
+        ).pipe(
             map((dto: IUserTacticListDto): ITacticsListViewModel => ({
                 userId: dto.userId,
                 items: dto.userTactics.map((item: IUserTacticListItemDto): ITacticsListItemViewModel => ({
@@ -31,9 +33,9 @@ export class TacticsService {
             }))
         )
 
-    createTactic = (tactic: ICreateTacticViewModel): Observable<any> => {
+    createTactic = (id: number, tactic: ICreateTacticViewModel): Observable<any> => {
         const dto: ICreateTacticDto = {
-            userId: 1,
+            userId: id,
             name: tactic.name,
             sportId: tactic.sportId,
             arenaPart: tactic.pitchPart,
@@ -44,7 +46,8 @@ export class TacticsService {
                 position: {
                     x: tactic.frame.ball.position.x,
                     y: tactic.frame.ball.position.y
-                }
+                },
+                colorId: tactic.frame.ball.color.id
             },
             ownTeam: {
                 colorId: tactic.frame.ownTeam.color.id,
@@ -72,14 +75,18 @@ export class TacticsService {
             }
         };
         const httpOptions = {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('userToken')
+            }),
         };
         return this.http.post<any>(`https://localhost:5001/api/tactic`, dto, httpOptions);
     }
 
     getTactic = (userId: number, tacticId: number): Observable<ITacticViewModel> =>
-        this.http.get<ITacticDto>(`https://localhost:5001/api/tactic/${userId}/${tacticId}`).pipe(
-            tap(x => console.log(x)),
+        this.http.get<ITacticDto>(`https://localhost:5001/api/tactic/${userId}/${tacticId}`,
+            { headers: new HttpHeaders({ Authorization: 'Bearer ' + localStorage.getItem('userToken')}) }
+        ).pipe(
             map((dto: ITacticDto): ITacticViewModel => ({
                 id: dto.id,
                 sportName: dto.sportName,

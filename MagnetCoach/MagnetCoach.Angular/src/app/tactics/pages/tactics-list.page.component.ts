@@ -19,7 +19,7 @@ export class TacticsListPageComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.service.getTactics(1).subscribe(res => this.list = res);
+        this.service.getTactics(+localStorage.getItem('userId')).subscribe(res => this.list = res);
     }
 
     newTactic() {

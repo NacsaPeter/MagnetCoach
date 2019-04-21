@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MagnetCoach.Application.Dtos.Sport;
 using MagnetCoach.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MagnetCoach.API.Controllers
@@ -19,6 +20,7 @@ namespace MagnetCoach.API.Controllers
             this.sportAppService = sportAppService;
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet]
         public async Task<ActionResult<SportsDto>> GetSports()
         {

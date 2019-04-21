@@ -301,7 +301,7 @@ export class NewTacticPageComponent implements OnInit {
     const ballCell = this.graph.getCell(this.ball);
     this.tactic.frame.ball.position = {...ballCell.prop('position')};
     this.tactic.sportId = this.currentSport.id;
-    this.tacticsService.createTactic(this.tactic).pipe(
+    this.tacticsService.createTactic(+localStorage.getItem('userId'), this.tactic).pipe(
       map(res => this.router.navigateByUrl('/tactics')),
       catchError(err => of(console.log(err)))
     ).subscribe();

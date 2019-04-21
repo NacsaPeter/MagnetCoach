@@ -14,7 +14,6 @@ namespace MagnetCoach.EF.Configurations
             builder.HasAlternateKey(x => x.UserName);
             builder.Property(x => x.Email).IsRequired();
             builder.Property(x => x.PasswordHash).IsRequired();
-            builder.Property(x => x.Salt).IsRequired();
         }
     }
 }

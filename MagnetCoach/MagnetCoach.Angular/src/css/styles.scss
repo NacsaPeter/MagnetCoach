@@ -12,13 +12,14 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
-@import '_variables';
-@import '_header';
-@import '_table';
-@import '_tactics';
-@import '_arena';
-@import '_buttons';
-@import '_picture';
+@import 'variables';
+@import 'header';
+@import 'table';
+@import 'tactics';
+@import 'arena';
+@import 'buttons';
+@import 'picture';
+@import 'login';
 
 * {
     font-family: 'Arial';

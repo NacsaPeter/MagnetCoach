@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagnetCoach.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190326020828_TacticName")]
-    partial class TacticName
+    [Migration("20190415211830_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,11 +27,15 @@ namespace MagnetCoach.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ColorId");
+
                     b.Property<bool>("IsVisible");
 
                     b.Property<int>("Size");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ColorId");
 
                     b.ToTable("Balls");
                 });
@@ -85,13 +89,31 @@ namespace MagnetCoach.EF.Migrations
                         {
                             Id = 6,
                             NumberColor = "Black",
-                            ShirtColor = "Wihte"
+                            ShirtColor = "White"
                         },
                         new
                         {
                             Id = 7,
                             NumberColor = "White",
                             ShirtColor = "Black"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            NumberColor = "White",
+                            ShirtColor = "Orange"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            NumberColor = "White",
+                            ShirtColor = "Brown"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            NumberColor = "Black",
+                            ShirtColor = "Pink"
                         });
                 });
 
@@ -141,7 +163,9 @@ namespace MagnetCoach.EF.Migrations
 
                     b.Property<int?>("OpponentTeamId");
 
-                    b.Property<int>("OwnTeamId");
+                    b.Property<int>("Order");
+
+                    b.Property<int?>("OwnTeamId");
 
                     b.Property<int>("TacticId");
 
@@ -190,8 +214,6 @@ namespace MagnetCoach.EF.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("Sports");
-
                     b.HasKey("Id");
 
                     b.HasAlternateKey("Name");
@@ -205,8 +227,7 @@ namespace MagnetCoach.EF.Migrations
                             HasEmptyGoal = false,
                             HasGoalkeeper = true,
                             MaxPlayers = 11,
-                            Name = "Football",
-                            Sports = 0
+                            Name = "Football"
                         },
                         new
                         {
@@ -214,8 +235,7 @@ namespace MagnetCoach.EF.Migrations
                             HasEmptyGoal = true,
                             HasGoalkeeper = true,
                             MaxPlayers = 7,
-                            Name = "Handball",
-                            Sports = 1
+                            Name = "Handball"
                         },
                         new
                         {
@@ -223,8 +243,7 @@ namespace MagnetCoach.EF.Migrations
                             HasEmptyGoal = false,
                             HasGoalkeeper = false,
                             MaxPlayers = 5,
-                            Name = "Basketball",
-                            Sports = 3
+                            Name = "Basketball"
                         },
                         new
                         {
@@ -232,8 +251,55 @@ namespace MagnetCoach.EF.Migrations
                             HasEmptyGoal = true,
                             HasGoalkeeper = true,
                             MaxPlayers = 6,
-                            Name = "Ice Hockey",
-                            Sports = 2
+                            Name = "Ice Hockey"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            HasEmptyGoal = false,
+                            HasGoalkeeper = false,
+                            MaxPlayers = 11,
+                            Name = "American Football"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            HasEmptyGoal = false,
+                            HasGoalkeeper = true,
+                            MaxPlayers = 5,
+                            Name = "Futsal"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            HasEmptyGoal = true,
+                            HasGoalkeeper = true,
+                            MaxPlayers = 6,
+                            Name = "Floorball"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            HasEmptyGoal = false,
+                            HasGoalkeeper = false,
+                            MaxPlayers = 15,
+                            Name = "Rugby"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            HasEmptyGoal = false,
+                            HasGoalkeeper = true,
+                            MaxPlayers = 7,
+                            Name = "Waterpolo"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            HasEmptyGoal = false,
+                            HasGoalkeeper = true,
+                            MaxPlayers = 11,
+                            Name = "Field Hockey"
                         });
                 });
 
@@ -243,7 +309,7 @@ namespace MagnetCoach.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ArenaPart");
+                    b.Property<string>("ArenaPart");
 
                     b.Property<string>("Name");
 
@@ -289,39 +355,59 @@ namespace MagnetCoach.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AccessFailedCount");
+
                     b.Property<DateTime>("BirthDay");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
                     b.Property<string>("Email")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<string>("Name");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash")
                         .IsRequired();
 
-                    b.Property<string>("Salt")
-                        .IsRequired();
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
                     b.HasAlternateKey("UserName");
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BirthDay = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "testuser@test.com",
-                            Name = "Test User",
-                            PasswordHash = "hash123",
-                            Salt = "salt123",
-                            UserName = "TestUser1"
-                        });
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("MagnetCoach.Domain.Models.UserRole", b =>
@@ -330,7 +416,53 @@ namespace MagnetCoach.EF.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Role");
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<int>("RoleId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
 
                     b.Property<int>("UserId");
 
@@ -338,11 +470,61 @@ namespace MagnetCoach.EF.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRoles");
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("ProviderKey");
+
+                    b.Property<string>("ProviderDisplayName");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("RoleId");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
                 });
 
             modelBuilder.Entity("MagnetCoach.Domain.Models.Ball", b =>
                 {
+                    b.HasOne("MagnetCoach.Domain.Models.Color", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.OwnsOne("MagnetCoach.Domain.Models.Position", "Position", b1 =>
                         {
                             b1.Property<int>("BallId")
@@ -393,8 +575,7 @@ namespace MagnetCoach.EF.Migrations
 
                     b.HasOne("MagnetCoach.Domain.Models.Team", "OwnTeam")
                         .WithMany()
-                        .HasForeignKey("OwnTeamId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OwnTeamId");
 
                     b.HasOne("MagnetCoach.Domain.Models.Tactic", "Tactic")
                         .WithMany("Frames")
@@ -455,10 +636,47 @@ namespace MagnetCoach.EF.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("MagnetCoach.Domain.Models.UserRole", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("MagnetCoach.Domain.Models.User", "User")
-                        .WithMany("Roles")
+                    b.HasOne("MagnetCoach.Domain.Models.UserRole")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
+                {
+                    b.HasOne("MagnetCoach.Domain.Models.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
+                {
+                    b.HasOne("MagnetCoach.Domain.Models.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
+                {
+                    b.HasOne("MagnetCoach.Domain.Models.UserRole")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MagnetCoach.Domain.Models.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
+                {
+                    b.HasOne("MagnetCoach.Domain.Models.User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

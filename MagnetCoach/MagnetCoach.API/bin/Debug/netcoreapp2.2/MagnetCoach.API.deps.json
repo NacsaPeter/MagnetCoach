@@ -523,7 +523,8 @@
       },
       "MagnetCoach.Application/1.0.0": {
         "dependencies": {
-          "MagnetCoach.EF": "1.0.0"
+          "MagnetCoach.EF": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.2.0"
         },
         "runtime": {
           "MagnetCoach.Application.dll": {}
@@ -544,7 +545,8 @@
         "dependencies": {
           "MagnetCoach.Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore": "2.2.3",
-          "Microsoft.EntityFrameworkCore.SqlServer": "2.2.3"
+          "Microsoft.EntityFrameworkCore.SqlServer": "2.2.3",
+          "Microsoft.Extensions.Identity.Stores": "2.2.0"
         },
         "runtime": {
           "MagnetCoach.EF.dll": {}

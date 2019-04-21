@@ -43,7 +43,7 @@ export class EditTacticPageComponent implements OnInit {
           gridSize: 1
         });
 
-        this.service.getTactic(1, +this.route.snapshot.paramMap.get('id')).subscribe(res => {
+        this.service.getTactic(+localStorage.getItem('userId'), +this.route.snapshot.paramMap.get('id')).subscribe(res => {
             this.tactic = res;
             this.currentFrame = this.tactic.frames[0];
             this.setUpFrame();

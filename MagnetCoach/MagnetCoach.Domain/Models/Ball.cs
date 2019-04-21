@@ -12,5 +12,8 @@ namespace MagnetCoach.Domain.Models
 
         public int Size { get; set; }
         public bool IsVisible { get; set; }
+
+        public int ColorId { get; set; }
+        public Color Color { get; set; }
     }
 }

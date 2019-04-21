@@ -27,7 +27,7 @@ namespace MagnetCoach.Application.AppServices
         {
             var tactic = new Tactic
             {
-                ArenaPart = dto.ArenaPart == "Endzone" ? ArenaPartEnum.Endzone : ArenaPartEnum.Full,
+                ArenaPart = dto.ArenaPart,
                 Name = dto.Name,
                 PlayerSize = dto.PlayerSize,
                 SportId = dto.SportId,
@@ -38,6 +38,7 @@ namespace MagnetCoach.Application.AppServices
             {
                 IsVisible = dto.Ball.IsVisible,
                 Size = dto.Ball.Size,
+                ColorId = dto.Ball.ColorId,
                 Position = new Position
                 {
                     PositionX = (int)dto.Ball.Position.X,
@@ -110,13 +111,14 @@ namespace MagnetCoach.Application.AppServices
                 .Include(x => x.OwnTeam)
                     .ThenInclude(x => x.GoalKeeperColor)
                 .Include(x => x.Ball)
+                    .ThenInclude(x => x.Color)
                 .Where(x => x.TacticId == tacticId)
                 .ToListAsync();
 
             return new TacticDto
             {
                 Id = tactic.Id,
-                ArenaPart = tactic.ArenaPart == ArenaPartEnum.Endzone ? "Endzone" : "Full",
+                ArenaPart = tactic.ArenaPart,
                 PlayerSize = tactic.PlayerSize,
                 SportName = tactic.Sport.Name,
                 HasGoalkeeper = tactic.Sport.HasGoalkeeper,
@@ -135,14 +137,14 @@ namespace MagnetCoach.Application.AppServices
                         },
                         Color = new ColorDto
                         {
-                            Id = 0,
-                            NumberColor = "Black",
-                            ShirtColor = "Black"
+                            Id = x.Ball.ColorId,
+                            ShirtColor = x.Ball.Color.ShirtColor,
+                            NumberColor = x.Ball.Color.NumberColor
                         }
                     },
                     OwnTeam = new TeamDto
                     {
-                        Id = x.OwnTeamId,
+                        Id = x.OwnTeamId ?? 0,
                         EmptyGoal = x.OwnTeam.EmptyGoal,
                         Color = new ColorDto
                         {

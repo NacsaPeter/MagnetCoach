@@ -1,5 +1,6 @@
 ﻿using MagnetCoach.Domain.Models;
 using MagnetCoach.EF.Configurations;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace MagnetCoach.EF
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User, UserRole, int>
     {
         public DbSet<Ball> Balls { get; set; }
         public DbSet<Color> Colors { get; set; }
@@ -18,8 +19,6 @@ namespace MagnetCoach.EF
         public DbSet<Sport> Sports { get; set; }
         public DbSet<Tactic> Tactics { get; set; }
         public DbSet<Team> Teams { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options
@@ -39,12 +38,14 @@ namespace MagnetCoach.EF
             builder.Entity<Color>().HasData(new Color { Id = 3, ShirtColor = "Green", NumberColor = "White" });
             builder.Entity<Color>().HasData(new Color { Id = 4, ShirtColor = "Yellow", NumberColor = "Black" });
             builder.Entity<Color>().HasData(new Color { Id = 5, ShirtColor = "Purple", NumberColor = "White" });
-            builder.Entity<Color>().HasData(new Color { Id = 6, ShirtColor = "Wihte", NumberColor = "Black" });
+            builder.Entity<Color>().HasData(new Color { Id = 6, ShirtColor = "White", NumberColor = "Black" });
             builder.Entity<Color>().HasData(new Color { Id = 7, ShirtColor = "Black", NumberColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 8, ShirtColor = "Orange", NumberColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 9, ShirtColor = "Brown", NumberColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 10, ShirtColor = "Pink", NumberColor = "Black" });
 
             builder.Entity<Sport>().HasData(new Sport {
                 Id = 1,
-                Sports = Domain.Enums.SportsEnum.Football,
                 Name = "Football",
                 MaxPlayers = 11,
                 HasGoalkeeper = true,
@@ -54,7 +55,6 @@ namespace MagnetCoach.EF
             builder.Entity<Sport>().HasData(new Sport
             {
                 Id = 2,
-                Sports = Domain.Enums.SportsEnum.Handball,
                 Name = "Handball",
                 MaxPlayers = 7,
                 HasGoalkeeper = true,
@@ -64,7 +64,6 @@ namespace MagnetCoach.EF
             builder.Entity<Sport>().HasData(new Sport
             {
                 Id = 3,
-                Sports = Domain.Enums.SportsEnum.Basketball,
                 Name = "Basketball",
                 MaxPlayers = 5,
                 HasGoalkeeper = false,
@@ -74,22 +73,64 @@ namespace MagnetCoach.EF
             builder.Entity<Sport>().HasData(new Sport
             {
                 Id = 4,
-                Sports = Domain.Enums.SportsEnum.IceHockey,
                 Name = "Ice Hockey",
                 MaxPlayers = 6,
                 HasGoalkeeper = true,
                 HasEmptyGoal = true
             });
 
-            builder.Entity<User>().HasData(new User
+            builder.Entity<Sport>().HasData(new Sport
             {
-                Id = 1,
-                UserName = "TestUser1",
-                Name = "Test User",
-                Email = "testuser@test.com",
-                PasswordHash = "hash123",
-                Salt = "salt123",
-                BirthDay = new DateTime()
+                Id = 5,
+                Name = "American Football",
+                MaxPlayers = 11,
+                HasGoalkeeper = false,
+                HasEmptyGoal = false
+            });
+
+            builder.Entity<Sport>().HasData(new Sport
+            {
+                Id = 6,
+                Name = "Futsal",
+                MaxPlayers = 5,
+                HasGoalkeeper = true,
+                HasEmptyGoal = false
+            });
+
+            builder.Entity<Sport>().HasData(new Sport
+            {
+                Id = 7,
+                Name = "Floorball",
+                MaxPlayers = 6,
+                HasGoalkeeper = true,
+                HasEmptyGoal = true
+            });
+
+            builder.Entity<Sport>().HasData(new Sport
+            {
+                Id = 8,
+                Name = "Rugby",
+                MaxPlayers = 15,
+                HasGoalkeeper = false,
+                HasEmptyGoal = false
+            });
+
+            builder.Entity<Sport>().HasData(new Sport
+            {
+                Id = 9,
+                Name = "Waterpolo",
+                MaxPlayers = 7,
+                HasGoalkeeper = true,
+                HasEmptyGoal = false
+            });
+
+            builder.Entity<Sport>().HasData(new Sport
+            {
+                Id = 10,
+                Name = "Field Hockey",
+                MaxPlayers = 11,
+                HasGoalkeeper = true,
+                HasEmptyGoal = false
             });
         }
     }

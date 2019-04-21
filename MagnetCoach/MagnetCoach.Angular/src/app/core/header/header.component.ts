@@ -18,4 +18,9 @@ export class HeaderComponent {
   navigateHome() {
     this.router.navigateByUrl('/');
   }
+
+  logOut() {
+    localStorage.clear();
+    this.router.navigateByUrl('/login');
+  }
 }

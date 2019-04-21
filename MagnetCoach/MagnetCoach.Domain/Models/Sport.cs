@@ -9,7 +9,6 @@ namespace MagnetCoach.Domain.Models
     public class Sport : IDbEntry
     {
         public int Id { get; set; }
-        public SportsEnum Sports { get; set; }
         public string Name { get; set; }
         public int MaxPlayers { get; set; }
         public bool HasGoalkeeper { get; set; }

@@ -7,3 +7,6 @@ C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Dom
 C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\obj\Debug\netcoreapp2.2\MagnetCoach.Domain.AssemblyInfo.cs
 C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\obj\Debug\netcoreapp2.2\MagnetCoach.Domain.dll
 C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\obj\Debug\netcoreapp2.2\MagnetCoach.Domain.pdb
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\bin\Debug\netcoreapp2.2\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\bin\Debug\netcoreapp2.2\Microsoft.Extensions.Identity.Stores.xml
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\obj\Debug\netcoreapp2.2\MagnetCoach.Domain.csproj.CopyComplete

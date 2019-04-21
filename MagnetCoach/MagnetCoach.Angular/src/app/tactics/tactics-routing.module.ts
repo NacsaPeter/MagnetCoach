@@ -3,11 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { TacticsListPageComponent } from './pages/tactics-list.page.component';
 import { NewTacticPageComponent } from './pages/new-tactic.page.component';
 import { EditTacticPageComponent } from './pages/edit-tactic.page.component';
+import { AuthGuard } from '../core/guards/auth.guards';
 
 const routes: Routes = [
-  { path: '', component: TacticsListPageComponent },
-  { path: 'new', component: NewTacticPageComponent },
-  { path: 'edit/:id', component: EditTacticPageComponent },
+  { path: '', component: TacticsListPageComponent, canActivate: [AuthGuard]  },
+  { path: 'new', component: NewTacticPageComponent, canActivate: [AuthGuard]  },
+  { path: 'edit/:id', component: EditTacticPageComponent, canActivate: [AuthGuard]  },
 ];
 
 @NgModule({

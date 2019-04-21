@@ -16,7 +16,7 @@ namespace MagnetCoach.Domain.Models
         public int SportId { get; set; }
         public Sport Sport { get; set; }
 
-        public ArenaPartEnum ArenaPart { get; set; }
+        public string ArenaPart { get; set; }
         public int PlayerSize { get; set; }
         public string Name { get; set; }
 

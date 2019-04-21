@@ -13,6 +13,7 @@ export interface ICreateBallTacticDto {
     isVisible: boolean;
     size: number;
     position: IPositionDto;
+    colorId: number;
 }
 
 export interface IPositionDto {
