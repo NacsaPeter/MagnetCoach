@@ -15,6 +15,8 @@ export interface IFrameDto {
     ball: IBallDto;
     ownTeam: ITeamDto;
     opponentTeam: ITeamDto;
+    order?: number;
+    details?: string;
 }
 
 export interface IBallDto {

@@ -11,7 +11,7 @@
             <mat-form-field style="width: 60px; margin-right: 10px;">
                 <input name="Prefix" matInput class="register-input" type="text" placeholder="Prefix"
                     [(ngModel)]="user.prefix" #Prefix="ngModel"
-                    [ngClass]="{ 'is-invalid': f.submitted && Prefix.invalid }" required>
+                    [ngClass]="{ 'is-invalid': f.submitted && Prefix.invalid }">
             </mat-form-field>
             <mat-form-field style="width: 110px; margin-right: 10px;">
                 <input name="FirstName" matInput class="register-input" type="text" placeholder="First name"

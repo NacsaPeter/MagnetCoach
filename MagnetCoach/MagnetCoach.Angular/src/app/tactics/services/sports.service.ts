@@ -5,6 +5,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ISportsDto, IColorDto, ISportDetailsDto, IFormationDto } from '../dtos/sports-dto.model';
 import { ISportsViewModel, IColorViewModel, ISportDetailsViewModel, IFormationViewModel } from '../models/sports.model';
 
+// export const baseUrl = 'https://localhost:5001';
+export const baseUrl = 'https://magnetcoachapi.azurewebsites.net';
+
 @Injectable()
 export class SportsService {
 
@@ -13,7 +16,7 @@ export class SportsService {
     ) { }
 
     getSports = (): Observable<ISportsViewModel> =>
-        this.http.get<ISportsDto>(`https://localhost:5001/api/sport`,
+        this.http.get<ISportsDto>(`${baseUrl}/api/sport`,
         { headers: new HttpHeaders({ Authorization: 'Bearer ' + localStorage.getItem('userToken')}) }
         ).pipe(
             map((dto: ISportsDto): ISportsViewModel => ({

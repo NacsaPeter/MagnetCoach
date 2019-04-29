@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { IRegisterUserDto, ILoginUserDto } from '../dtos/user-dto.model';
+import { baseUrl } from 'src/app/tactics/services/sports.service';
 
 
 @Injectable()
@@ -13,7 +14,7 @@ export class UserService {
     ) { }
 
     public registerUser(user: IRegisterUserDto): Observable<any> {
-        return this.http.post<any>('https://localhost:5001/api/user/signup', user)
+        return this.http.post<any>(`${baseUrl}/api/user/signup`, user)
             .pipe(catchError((error) => {
                 return throwError(error);
             }));
@@ -23,7 +24,7 @@ export class UserService {
         const httpOptions = {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' })
         };
-        return this.http.post<any>('https://localhost:5001/api/user/login', user, httpOptions)
+        return this.http.post<any>(`${baseUrl}/api/user/login`, user, httpOptions)
             .pipe(catchError((error) => {
                 return throwError(error);
             }));

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagnetCoach.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190415211830_Initial")]
-    partial class Initial
+    [Migration("20190421212130_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -132,6 +132,32 @@ namespace MagnetCoach.EF.Migrations
                     b.HasIndex("SportId");
 
                     b.ToTable("Formations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "4-4-2",
+                            SportId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "4-3-3",
+                            SportId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "6",
+                            SportId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "5-1",
+                            SportId = 2
+                        });
                 });
 
             modelBuilder.Entity("MagnetCoach.Domain.Models.FormationLine", b =>
@@ -151,6 +177,120 @@ namespace MagnetCoach.EF.Migrations
                     b.HasIndex("FormationId");
 
                     b.ToTable("FormationLines");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FormationId = 1,
+                            NumberOfPlayers = 1,
+                            Order = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FormationId = 1,
+                            NumberOfPlayers = 4,
+                            Order = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FormationId = 1,
+                            NumberOfPlayers = 4,
+                            Order = 3
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FormationId = 1,
+                            NumberOfPlayers = 2,
+                            Order = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FormationId = 2,
+                            NumberOfPlayers = 1,
+                            Order = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            FormationId = 2,
+                            NumberOfPlayers = 4,
+                            Order = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            FormationId = 2,
+                            NumberOfPlayers = 3,
+                            Order = 3
+                        },
+                        new
+                        {
+                            Id = 8,
+                            FormationId = 2,
+                            NumberOfPlayers = 3,
+                            Order = 4
+                        },
+                        new
+                        {
+                            Id = 9,
+                            FormationId = 3,
+                            NumberOfPlayers = 1,
+                            Order = 1
+                        },
+                        new
+                        {
+                            Id = 10,
+                            FormationId = 3,
+                            NumberOfPlayers = 6,
+                            Order = 2
+                        },
+                        new
+                        {
+                            Id = 11,
+                            FormationId = 3,
+                            NumberOfPlayers = 0,
+                            Order = 3
+                        },
+                        new
+                        {
+                            Id = 12,
+                            FormationId = 3,
+                            NumberOfPlayers = 0,
+                            Order = 4
+                        },
+                        new
+                        {
+                            Id = 13,
+                            FormationId = 4,
+                            NumberOfPlayers = 1,
+                            Order = 1
+                        },
+                        new
+                        {
+                            Id = 14,
+                            FormationId = 4,
+                            NumberOfPlayers = 5,
+                            Order = 2
+                        },
+                        new
+                        {
+                            Id = 15,
+                            FormationId = 4,
+                            NumberOfPlayers = 1,
+                            Order = 3
+                        },
+                        new
+                        {
+                            Id = 16,
+                            FormationId = 4,
+                            NumberOfPlayers = 0,
+                            Order = 4
+                        });
                 });
 
             modelBuilder.Entity("MagnetCoach.Domain.Models.Frame", b =>
@@ -160,6 +300,8 @@ namespace MagnetCoach.EF.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("BallId");
+
+                    b.Property<string>("Details");
 
                     b.Property<int?>("OpponentTeamId");
 
@@ -531,9 +673,9 @@ namespace MagnetCoach.EF.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                            b1.Property<int>("PositionX");
+                            b1.Property<double>("PositionX");
 
-                            b1.Property<int>("PositionY");
+                            b1.Property<double>("PositionY");
 
                             b1.HasKey("BallId");
 
@@ -596,9 +738,9 @@ namespace MagnetCoach.EF.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                            b1.Property<int>("PositionX");
+                            b1.Property<double>("PositionX");
 
-                            b1.Property<int>("PositionY");
+                            b1.Property<double>("PositionY");
 
                             b1.HasKey("PlayerId");
 

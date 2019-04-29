@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MagnetCoach.EF.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -195,8 +195,8 @@ namespace MagnetCoach.EF.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Position_PositionX = table.Column<int>(nullable: false),
-                    Position_PositionY = table.Column<int>(nullable: false),
+                    Position_PositionX = table.Column<double>(nullable: false),
+                    Position_PositionY = table.Column<double>(nullable: false),
                     Size = table.Column<int>(nullable: false),
                     IsVisible = table.Column<bool>(nullable: false),
                     ColorId = table.Column<int>(nullable: false)
@@ -294,8 +294,8 @@ namespace MagnetCoach.EF.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Position_PositionX = table.Column<int>(nullable: false),
-                    Position_PositionY = table.Column<int>(nullable: false),
+                    Position_PositionX = table.Column<double>(nullable: false),
+                    Position_PositionY = table.Column<double>(nullable: false),
                     Number = table.Column<int>(nullable: false),
                     TeamId = table.Column<int>(nullable: false)
                 },
@@ -338,6 +338,7 @@ namespace MagnetCoach.EF.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Order = table.Column<int>(nullable: false),
+                    Details = table.Column<string>(nullable: true),
                     TacticId = table.Column<int>(nullable: false),
                     BallId = table.Column<int>(nullable: false),
                     OwnTeamId = table.Column<int>(nullable: true),
@@ -404,6 +405,40 @@ namespace MagnetCoach.EF.Migrations
                     { 7, true, true, 6, "Floorball" },
                     { 8, false, false, 15, "Rugby" },
                     { 10, false, true, 11, "Field Hockey" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Formations",
+                columns: new[] { "Id", "Name", "SportId" },
+                values: new object[,]
+                {
+                    { 1, "4-4-2", 1 },
+                    { 2, "4-3-3", 1 },
+                    { 3, "6", 2 },
+                    { 4, "5-1", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "FormationLines",
+                columns: new[] { "Id", "FormationId", "NumberOfPlayers", "Order" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, 1 },
+                    { 2, 1, 4, 2 },
+                    { 3, 1, 4, 3 },
+                    { 4, 1, 2, 4 },
+                    { 5, 2, 1, 1 },
+                    { 6, 2, 4, 2 },
+                    { 7, 2, 3, 3 },
+                    { 8, 2, 3, 4 },
+                    { 9, 3, 1, 1 },
+                    { 10, 3, 6, 2 },
+                    { 11, 3, 0, 3 },
+                    { 12, 3, 0, 4 },
+                    { 13, 4, 1, 1 },
+                    { 14, 4, 5, 2 },
+                    { 15, 4, 1, 3 },
+                    { 16, 4, 0, 4 }
                 });
 
             migrationBuilder.CreateIndex(

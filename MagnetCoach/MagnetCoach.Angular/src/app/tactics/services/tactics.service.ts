@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IUserTacticListDto, IUserTacticListItemDto } from '../dtos/tactics-list-dtos.model';
 import { ICreateTacticDto, ICreatePlayerDto } from '../dtos/create-tactic-dto.model';
 import { ITacticDto, IFrameDto, IPlayerDto } from '../dtos/tactic-dto.model';
+import { baseUrl } from './sports.service';
 
 @Injectable()
 export class TacticsService {
@@ -16,7 +17,7 @@ export class TacticsService {
     ) { }
 
     getTactics = (userId: number): Observable<ITacticsListViewModel> =>
-        this.http.get<IUserTacticListDto>(`https://localhost:5001/api/tactic/${userId}`,
+        this.http.get<IUserTacticListDto>(`${baseUrl}/api/tactic/${userId}`,
             { headers: new HttpHeaders({ Authorization: 'Bearer ' + localStorage.getItem('userToken')}) }
         ).pipe(
             map((dto: IUserTacticListDto): ITacticsListViewModel => ({
@@ -80,11 +81,11 @@ export class TacticsService {
                 Authorization: 'Bearer ' + localStorage.getItem('userToken')
             }),
         };
-        return this.http.post<any>(`https://localhost:5001/api/tactic`, dto, httpOptions);
+        return this.http.post<any>(`${baseUrl}/api/tactic`, dto, httpOptions);
     }
 
     getTactic = (userId: number, tacticId: number): Observable<ITacticViewModel> =>
-        this.http.get<ITacticDto>(`https://localhost:5001/api/tactic/${userId}/${tacticId}`,
+        this.http.get<ITacticDto>(`${baseUrl}/api/tactic/${userId}/${tacticId}`,
             { headers: new HttpHeaders({ Authorization: 'Bearer ' + localStorage.getItem('userToken')}) }
         ).pipe(
             map((dto: ITacticDto): ITacticViewModel => ({
@@ -96,6 +97,7 @@ export class TacticsService {
                 frames: dto.frames.map((frame: IFrameDto): IFrameViewModel => ({
                     id: frame.id,
                     ball: {
+                        id: frame.ball.id,
                         size: frame.ball.size,
                         position: {
                             x: frame.ball.position.x,
@@ -157,5 +159,85 @@ export class TacticsService {
                 }))
             }))
         )
+
+    saveTactic = (tactic: ITacticViewModel, userId: number, tacticId: number): Observable<void> => {
+        const dto: ITacticDto = {
+            id: tactic.id,
+                sportName: tactic.sportName,
+                hasGoalkeeper: tactic.hasGoalkeeper,
+                arenaPart: tactic.pitchPart,
+                playerSize: tactic.playerSize,
+                frames: tactic.frames.map((frame: IFrameViewModel): IFrameDto => ({
+                    id: frame.id,
+                    order: frame.order,
+                    details: frame.details,
+                    ball: {
+                        id: frame.ball.id,
+                        size: frame.ball.size,
+                        position: {
+                            x: frame.ball.position.x,
+                            y: frame.ball.position.y
+                        },
+                        isVisible: frame.ball.visible,
+                        color: {
+                            id: frame.ball.color.id,
+                            numberColor: frame.ball.color.numberColor,
+                            shirtColor: frame.ball.color.shirtColor
+                        }
+                    },
+                    ownTeam: {
+                        id: frame.ownTeam.id,
+                        color: {
+                            id: frame.ownTeam.color.id,
+                            shirtColor: frame.ownTeam.color.shirtColor,
+                            numberColor: frame.ownTeam.color.numberColor
+                        },
+                        goalkeeperColor: {
+                            id: frame.ownTeam.goalKeeperColor.id,
+                            shirtColor: frame.ownTeam.goalKeeperColor.shirtColor,
+                            numberColor: frame.ownTeam.goalKeeperColor.numberColor
+                        },
+                        emptyGoal: frame.ownTeam.emptyGoal,
+                        players: frame.ownTeam.players.map((player: IPlayerDto): IPlayerViewModel => ({
+                            id: player.id,
+                            number: player.number,
+                            position: {
+                                x: player.position.x,
+                                y: player.position.y
+                            }
+                        }))
+                    },
+                    opponentTeam: {
+                        id: frame.opponentTeam.id,
+                        color: {
+                            id: frame.opponentTeam.color.id,
+                            shirtColor: frame.opponentTeam.color.shirtColor,
+                            numberColor: frame.opponentTeam.color.numberColor
+                        },
+                        goalkeeperColor: {
+                            id: frame.opponentTeam.goalKeeperColor.id,
+                            shirtColor: frame.opponentTeam.goalKeeperColor.shirtColor,
+                            numberColor: frame.opponentTeam.goalKeeperColor.numberColor
+                        },
+                        emptyGoal: frame.opponentTeam.emptyGoal,
+                        players: frame.opponentTeam.players.map((player: IPlayerDto): IPlayerViewModel => ({
+                            id: player.id,
+                            number: player.number,
+                            position: {
+                                x: player.position.x,
+                                y: player.position.y
+                            }
+                        }))
+                    },
+                }))
+        };
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('userToken')
+            }),
+        };
+        return this.http.put<any>(`${baseUrl}/api/tactic/${userId}/${tacticId}`, dto, httpOptions);
+    }
 
 }

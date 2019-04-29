@@ -10,6 +10,7 @@ namespace MagnetCoach.Application.Interfaces
     {
         Task<UserTacticListDto> GetTacticsAsync(int userId);
         Task CreateTacticAsync(CreateTacticDto dto);
-        Task<TacticDto> GetTacticAsync(int tacticId);
+        Task<TacticDto> GetTacticAsync(int userId, int tacticId);
+        Task SaveTacticAsync(TacticDto dto);
     }
 }

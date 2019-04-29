@@ -1,0 +1,12 @@
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\bin\Release\netcoreapp2.2\MagnetCoach.Domain.deps.json
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\bin\Release\netcoreapp2.2\MagnetCoach.Domain.dll
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\bin\Release\netcoreapp2.2\MagnetCoach.Domain.pdb
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\bin\Release\netcoreapp2.2\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\bin\Release\netcoreapp2.2\Microsoft.Extensions.Identity.Stores.xml
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\obj\Release\netcoreapp2.2\MagnetCoach.Domain.csprojAssemblyReference.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\obj\Release\netcoreapp2.2\MagnetCoach.Domain.csproj.CoreCompileInputs.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\obj\Release\netcoreapp2.2\MagnetCoach.Domain.AssemblyInfoInputs.cache
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\obj\Release\netcoreapp2.2\MagnetCoach.Domain.AssemblyInfo.cs
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\obj\Release\netcoreapp2.2\MagnetCoach.Domain.csproj.CopyComplete
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\obj\Release\netcoreapp2.2\MagnetCoach.Domain.dll
+C:\Users\nacsa\OneDrive\Dokumentumok\git\MagnetCoach\MagnetCoach\MagnetCoach.Domain\obj\Release\netcoreapp2.2\MagnetCoach.Domain.pdb

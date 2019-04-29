@@ -35,6 +35,7 @@ export class NewTacticPageComponent implements OnInit {
     frame: {
       id: 0,
       ball: {
+        id: 0,
         size: 30,
         position: { x: 482, y: 332 },
         visible: true,

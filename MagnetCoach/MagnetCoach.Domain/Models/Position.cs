@@ -6,7 +6,7 @@ namespace MagnetCoach.Domain.Models
 {
     public class Position
     {
-        public int PositionX { get; set; }
-        public int PositionY { get; set; }
+        public double PositionX { get; set; }
+        public double PositionY { get; set; }
     }
 }

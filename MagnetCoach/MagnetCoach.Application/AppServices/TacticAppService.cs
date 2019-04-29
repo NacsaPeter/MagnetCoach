@@ -41,8 +41,8 @@ namespace MagnetCoach.Application.AppServices
                 ColorId = dto.Ball.ColorId,
                 Position = new Position
                 {
-                    PositionX = (int)dto.Ball.Position.X,
-                    PositionY = (int)dto.Ball.Position.Y
+                    PositionX = dto.Ball.Position.X,
+                    PositionY = dto.Ball.Position.Y
                 }
             };
 
@@ -56,8 +56,8 @@ namespace MagnetCoach.Application.AppServices
                     Number = x.Number,
                     Position = new Position
                     {
-                        PositionX = (int)x.Position.X,
-                        PositionY = (int)x.Position.Y
+                        PositionX = x.Position.X,
+                        PositionY = x.Position.Y
                     }
                 }).ToList()
             };
@@ -83,18 +83,19 @@ namespace MagnetCoach.Application.AppServices
                 Tactic = tactic,
                 Ball = ball,
                 OwnTeam = ownTeam,
-                OpponentTeam = opponentTeam
+                OpponentTeam = opponentTeam,
+                Order = 1
             };
 
             context.Frames.Add(frame);
             await context.SaveChangesAsync();
         }
 
-        public async Task<TacticDto> GetTacticAsync(int tacticId)
+        public async Task<TacticDto> GetTacticAsync(int userId, int tacticId)
         {
             var tactic = await context.Tactics
                 .Include(x => x.Sport)
-                .Where(x => x.Id == tacticId)
+                .Where(x => x.Id == tacticId && x.UserId == userId)
                 .SingleOrDefaultAsync();
 
             var frames = await context.Frames
@@ -122,81 +123,83 @@ namespace MagnetCoach.Application.AppServices
                 PlayerSize = tactic.PlayerSize,
                 SportName = tactic.Sport.Name,
                 HasGoalkeeper = tactic.Sport.HasGoalkeeper,
-                Frames = frames.Select(x => new FrameDto
-                {
-                    Id = x.Id,
-                    Ball = new BallDto
+                Frames = frames
+                    .OrderBy(x => x.Order)
+                    .Select(x => new FrameDto
                     {
-                        Id = x.BallId,
-                        IsVisible = x.Ball.IsVisible,
-                        Size = x.Ball.Size,
-                        Position = new PositionDto
+                        Id = x.Id,
+                        Ball = new BallDto
                         {
-                            X = x.Ball.Position.PositionX,
-                            Y = x.Ball.Position.PositionY
+                            Id = x.BallId,
+                            IsVisible = x.Ball.IsVisible,
+                            Size = x.Ball.Size,
+                            Position = new PositionDto
+                            {
+                                X = x.Ball.Position.PositionX,
+                                Y = x.Ball.Position.PositionY
+                            },
+                            Color = new ColorDto
+                            {
+                                Id = x.Ball.ColorId,
+                                ShirtColor = x.Ball.Color.ShirtColor,
+                                NumberColor = x.Ball.Color.NumberColor
+                            }
                         },
-                        Color = new ColorDto
+                        OwnTeam = new TeamDto
                         {
-                            Id = x.Ball.ColorId,
-                            ShirtColor = x.Ball.Color.ShirtColor,
-                            NumberColor = x.Ball.Color.NumberColor
+                            Id = x.OwnTeamId ?? 0,
+                            EmptyGoal = x.OwnTeam.EmptyGoal,
+                            Color = new ColorDto
+                            {
+                                Id = x.OwnTeam.PlayerColor.Id,
+                                NumberColor = x.OwnTeam.PlayerColor.NumberColor,
+                                ShirtColor = x.OwnTeam.PlayerColor.ShirtColor
+                            },
+                            GoalkeeperColor = new ColorDto
+                            {
+                                Id = x.OwnTeam.GoalKeeperColor.Id,
+                                NumberColor = x.OwnTeam.GoalKeeperColor.NumberColor,
+                                ShirtColor = x.OwnTeam.GoalKeeperColor.ShirtColor
+                            },
+                            Players = x.OwnTeam.Players.Select(y => new PlayerDto
+                            {
+                                Id = y.Id,
+                                Number = y.Number,
+                                Position = new PositionDto
+                                {
+                                    X = y.Position.PositionX,
+                                    Y = y.Position.PositionY
+                                }
+                            }).ToList()
+                        },
+                        OpponentTeam = new TeamDto
+                        {
+                            Id = x.OpponentTeam.Id,
+                            EmptyGoal = x.OpponentTeam.EmptyGoal,
+                            Color = new ColorDto
+                            {
+                                Id = x.OpponentTeam.PlayerColor.Id,
+                                NumberColor = x.OpponentTeam.PlayerColor.NumberColor,
+                                ShirtColor = x.OpponentTeam.PlayerColor.ShirtColor
+                            },
+                            GoalkeeperColor = new ColorDto
+                            {
+                                Id = x.OpponentTeam.GoalKeeperColor.Id,
+                                NumberColor = x.OpponentTeam.GoalKeeperColor.NumberColor,
+                                ShirtColor = x.OpponentTeam.GoalKeeperColor.ShirtColor
+                            },
+                            Players = x.OpponentTeam.Players.Select(y => new PlayerDto
+                            {
+                                Id = y.Id,
+                                Number = y.Number,
+                                Position = new PositionDto
+                                {
+                                    X = y.Position.PositionX,
+                                    Y = y.Position.PositionY
+                                }
+                            }).ToList()
                         }
-                    },
-                    OwnTeam = new TeamDto
-                    {
-                        Id = x.OwnTeamId ?? 0,
-                        EmptyGoal = x.OwnTeam.EmptyGoal,
-                        Color = new ColorDto
-                        {
-                            Id = x.OwnTeam.PlayerColor.Id,
-                            NumberColor = x.OwnTeam.PlayerColor.NumberColor,
-                            ShirtColor = x.OwnTeam.PlayerColor.ShirtColor
-                        },
-                        GoalkeeperColor = new ColorDto
-                        {
-                            Id = x.OwnTeam.GoalKeeperColor.Id,
-                            NumberColor = x.OwnTeam.GoalKeeperColor.NumberColor,
-                            ShirtColor = x.OwnTeam.GoalKeeperColor.ShirtColor
-                        },
-                        Players = x.OwnTeam.Players.Select(y => new PlayerDto
-                        {
-                            Id = y.Id,
-                            Number = y.Number,
-                            Position = new PositionDto
-                            {
-                                X = y.Position.PositionX,
-                                Y = y.Position.PositionY
-                            }
-                        }).ToList()
-                    },
-                    OpponentTeam = new TeamDto
-                    {
-                        Id = x.OpponentTeam.Id,
-                        EmptyGoal = x.OpponentTeam.EmptyGoal,
-                        Color = new ColorDto
-                        {
-                            Id = x.OpponentTeam.PlayerColor.Id,
-                            NumberColor = x.OpponentTeam.PlayerColor.NumberColor,
-                            ShirtColor = x.OpponentTeam.PlayerColor.ShirtColor
-                        },
-                        GoalkeeperColor = new ColorDto
-                        {
-                            Id = x.OpponentTeam.GoalKeeperColor.Id,
-                            NumberColor = x.OpponentTeam.GoalKeeperColor.NumberColor,
-                            ShirtColor = x.OpponentTeam.GoalKeeperColor.ShirtColor
-                        },
-                        Players = x.OpponentTeam.Players.Select(y => new PlayerDto
-                        {
-                            Id = y.Id,
-                            Number = y.Number,
-                            Position = new PositionDto
-                            {
-                                X = y.Position.PositionX,
-                                Y = y.Position.PositionY
-                            }
-                        }).ToList()
-                    }
-                }).ToList()
+                    }).ToList()
             };
         }
 
@@ -218,7 +221,6 @@ namespace MagnetCoach.Application.AppServices
                 UserName = user.Name,
                 UserTactics = tactics.Select(x => new UserTacticListItemDto
                 {
-                    // ArenaPart = (ArenaPartTypeEnum)Enum.Parse(typeof(ArenaPartTypeEnum), x.ArenaPart.ToString()),
                     ArenaPart = x.ArenaPart.ToString(),
                     Sport = x.Sport.Name,
                     TacticId = x.Id,
@@ -226,6 +228,107 @@ namespace MagnetCoach.Application.AppServices
                 }
                 ).ToList()
             };
+        }
+
+        public async Task SaveTacticAsync(TacticDto dto)
+        {
+            var frames = await context.Frames
+                .Where(x => x.TacticId == dto.Id)
+                .ToListAsync();
+
+            foreach (var frameDto in dto.Frames)
+            {
+                if (frameDto.Id == 0)
+                {
+                    var frame = new Frame
+                    {
+                        Ball = new Ball
+                        {
+                            ColorId = frameDto.Ball.Color.Id,
+                            IsVisible = frameDto.Ball.IsVisible,
+                            Size = frameDto.Ball.Size,
+                            Position = new Position
+                            {
+                                PositionX = frameDto.Ball.Position.X,
+                                PositionY = frameDto.Ball.Position.Y
+                            }
+                        },
+                        Details = frameDto.Details,
+                        OpponentTeam = new Team
+                        {
+                            EmptyGoal = frameDto.OpponentTeam.EmptyGoal,
+                            GoalKeeperColorId = frameDto.OpponentTeam.Color.Id,
+                            PlayerColorId = frameDto.OpponentTeam.Color.Id,
+                            Players = frameDto.OpponentTeam.Players.Select(x => new Player
+                            {
+                                Number = x.Number,
+                                Position = new Position
+                                {
+                                    PositionX = x.Position.X,
+                                    PositionY = x.Position.Y
+                                }
+                            }).ToList()
+                        },
+                        OwnTeam = new Team
+                        {
+                            EmptyGoal = frameDto.OwnTeam.EmptyGoal,
+                            GoalKeeperColorId = frameDto.OwnTeam.Color.Id,
+                            PlayerColorId = frameDto.OwnTeam.Color.Id,
+                            Players = frameDto.OwnTeam.Players.Select(x => new Player
+                            {
+                                Number = x.Number,
+                                Position = new Position
+                                {
+                                    PositionX = x.Position.X,
+                                    PositionY = x.Position.Y
+                                }
+                            }).ToList()
+                        },
+                        Order = frameDto.Order,
+                        TacticId = dto.Id
+                    };
+                    context.Frames.Add(frame);
+                }
+                else
+                {
+                    var frame = frames
+                        .Where(x => x.Id == frameDto.Id)
+                        .SingleOrDefault();
+
+                    var ball = await context.Balls
+                        .Include(x => x.Position)
+                        .Where(x => x.Id == frame.BallId)
+                        .SingleOrDefaultAsync();
+                    frame.Ball.Position.PositionX = frameDto.Ball.Position.X;
+                    frame.Ball.Position.PositionY = frameDto.Ball.Position.Y;
+
+
+                    frame.Details = frameDto.Details;
+                    frame.Order = frameDto.Order;
+
+                    foreach (var playerDto in frameDto.OpponentTeam.Players)
+                    {
+                        var player = await context.Players
+                            .Include(x => x.Position)
+                            .Where(x => x.Id == playerDto.Id)
+                            .SingleOrDefaultAsync();
+                        player.Position.PositionX = playerDto.Position.X;
+                        player.Position.PositionY = playerDto.Position.Y;
+                    }
+
+                    foreach (var playerDto in frameDto.OwnTeam.Players)
+                    {
+                        var player = await context.Players
+                            .Include(x => x.Position)
+                            .Where(x => x.Id == playerDto.Id)
+                            .SingleOrDefaultAsync();
+                        player.Position.PositionX = playerDto.Position.X;
+                        player.Position.PositionY = playerDto.Position.Y;
+                    }
+                }
+            }
+
+            await context.SaveChangesAsync();
         }
     }
 }

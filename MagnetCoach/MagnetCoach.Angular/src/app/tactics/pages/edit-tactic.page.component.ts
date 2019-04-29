@@ -88,6 +88,8 @@ export class EditTacticPageComponent implements OnInit {
         this.preservePositions();
         const index = this.tactic.frames.indexOf(this.currentFrame);
         const newFrame = JSON.parse(JSON.stringify(this.tactic.frames[this.tactic.frames.length - 1]));
+        newFrame.id = 0;
+        newFrame.ball.id = 0;
         if (index + 1 === this.tactic.frames.length) {
             this.tactic.frames.push(newFrame);
         } else {
@@ -243,7 +245,10 @@ export class EditTacticPageComponent implements OnInit {
                 const player = new joint.shapes.basic.Circle({
                     position: { x: 0, y: 0},
                     size: { width: this.tactic.playerSize, height: this.tactic.playerSize },
-                    attrs: { circle: { fill: lastFrame.ownTeam.color, opacity: 0.5 }, text: { text: '0', fill: 'white' } }
+                    attrs: {
+                        circle: { fill: lastFrame.ownTeam.color.shirtColor, opacity: 0.5 },
+                        text: { text: '0', fill: lastFrame.ownTeam.color.numberColor }
+                    }
                 });
                 for (let i = 1; i <= lastFrame.ownTeam.players.length; i++) {
                     const newPlayer = player.clone() as joint.shapes.basic.Circle;
@@ -294,6 +299,14 @@ export class EditTacticPageComponent implements OnInit {
             this.graph.clear();
             this.setUpFrame();
         }
+    }
+
+    saveTactic() {
+        this.preservePositions();
+        for (let i = 0; i < this.tactic.frames.length; i++) {
+            this.tactic.frames[i].order = i + 1;
+        }
+        this.service.saveTactic(this.tactic, +localStorage.getItem('userId'), this.tactic.id).subscribe();
     }
 
 }

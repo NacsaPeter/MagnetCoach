@@ -29,6 +29,8 @@ export interface IFrameViewModel {
     ball: IBallViewModel;
     ownTeam: ITeamViewModel;
     opponentTeam: ITeamViewModel;
+    order?: number;
+    details?: string;
 }
 
 export interface ITeamViewModel {
@@ -47,6 +49,7 @@ export interface IPlayerViewModel {
 }
 
 export interface IBallViewModel {
+    id: number;
     size: number;
     position: IPositionViewModel;
     visible: boolean;

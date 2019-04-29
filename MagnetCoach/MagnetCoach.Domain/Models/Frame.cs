@@ -9,6 +9,7 @@ namespace MagnetCoach.Domain.Models
     {
         public int Id { get; set; }
         public int Order { get; set; }
+        public string Details { get; set; }
 
         public int TacticId { get; set; }
         public Tactic Tactic { get; set; }

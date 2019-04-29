@@ -132,6 +132,32 @@ namespace MagnetCoach.EF
                 HasGoalkeeper = true,
                 HasEmptyGoal = false
             });
+
+
+            builder.Entity<Formation>().HasData(new Formation { Id = 1, Name = "4-4-2", SportId = 1 });
+            builder.Entity<Formation>().HasData(new Formation { Id = 2, Name = "4-3-3", SportId = 1 });
+            builder.Entity<Formation>().HasData(new Formation { Id = 3, Name = "6", SportId = 2 });
+            builder.Entity<Formation>().HasData(new Formation { Id = 4, Name = "5-1", SportId = 2 });
+
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 1, NumberOfPlayers = 1, Order = 1, FormationId = 1 });
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 2, NumberOfPlayers = 4, Order = 2, FormationId = 1 });
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 3, NumberOfPlayers = 4, Order = 3, FormationId = 1 });
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 4, NumberOfPlayers = 2, Order = 4, FormationId = 1 });
+
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 5, NumberOfPlayers = 1, Order = 1, FormationId = 2 });
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 6, NumberOfPlayers = 4, Order = 2, FormationId = 2 });
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 7, NumberOfPlayers = 3, Order = 3, FormationId = 2 });
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 8, NumberOfPlayers = 3, Order = 4, FormationId = 2 });
+
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 9, NumberOfPlayers = 1, Order = 1, FormationId = 3 });
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 10, NumberOfPlayers = 6, Order = 2, FormationId = 3 });
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 11, NumberOfPlayers = 0, Order = 3, FormationId = 3 });
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 12, NumberOfPlayers = 0, Order = 4, FormationId = 3 });
+
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 13, NumberOfPlayers = 1, Order = 1, FormationId = 4 });
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 14, NumberOfPlayers = 5, Order = 2, FormationId = 4 });
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 15, NumberOfPlayers = 1, Order = 3, FormationId = 4 });
+            builder.Entity<FormationLine>().HasData(new FormationLine { Id = 16, NumberOfPlayers = 0, Order = 4, FormationId = 4 });
         }
     }
 }

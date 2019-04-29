@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/d974c5b1-3ca8-4872-8dd3-28a443265aed/resourceGroups/MagnetCoach/providers/Microsoft.Web/sites/MagnetCoach",
+    "appService.deploySubpath": "dist\\MagnetCoachClient"
+}
