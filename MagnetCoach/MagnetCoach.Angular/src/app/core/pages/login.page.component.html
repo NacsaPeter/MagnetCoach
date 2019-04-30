@@ -1,28 +1,33 @@
 <div class="sign-up-container mat-elevation-z8">
-    <form name="form" (ngSubmit)="f.form.valid && LoginUser()" #f="ngForm" novalidate>
-        <div>
-            <mat-form-field>
-                <input name="UserName" matInput class="register-input" type="text" placeholder="Username"
-                    [(ngModel)]="user.userName" #UserName="ngModel"
-                    [ngClass]="{ 'is-invalid': f.submitted && UserName.invalid }" required>
-            </mat-form-field>
+    <div style="position: relative;">
+        <div class="table-loading-indicator" *ngIf="isLoading" style="margin: -60px -40px -120px;">
+            <mat-spinner></mat-spinner>
         </div>
-        <div>
-            <mat-form-field>
-                <input name="Password" matInput class="register-input" type="password" placeholder="Password"
-                    [(ngModel)]="user.password" #Password="ngModel"
-                    [ngClass]="{ 'is-invalid': f.submitted && Password.invalid }" required>
-            </mat-form-field>
-        </div>
-        <div style="color: red; margin: 20px 0px 50px 0px; height: 14px;">
-            <span *ngIf="isLoginError">Incorrect username or password</span>
-        </div>
-        <div class="button-container">
-            <button mat-raised-button>
-                Login
-            </button>
-        </div>
-    </form>
+        <form name="form" (ngSubmit)="f.form.valid && LoginUser()" #f="ngForm" novalidate>
+            <div>
+                <mat-form-field>
+                    <input name="UserName" matInput class="register-input" type="text" placeholder="Username"
+                        [(ngModel)]="user.userName" #UserName="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && UserName.invalid }" required>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input name="Password" matInput class="register-input" type="password" placeholder="Password"
+                        [(ngModel)]="user.password" #Password="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && Password.invalid }" required>
+                </mat-form-field>
+            </div>
+            <div style="color: red; margin: 20px 0px 50px 0px; height: 14px;">
+                <span *ngIf="isLoginError">Incorrect username or password</span>
+            </div>
+            <div class="button-container">
+                <button mat-raised-button>
+                    Login
+                </button>
+            </div>
+        </form>
+    </div>
     <div style="font-size: 14px; margin-top: 30px; text-align: center;">
         Don't have an account?
         <a (click)="navigateToRegistration()" style="text-decoration: underline; cursor: pointer;">Register</a>

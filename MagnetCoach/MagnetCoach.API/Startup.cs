@@ -40,8 +40,8 @@ namespace MagnetCoach.API
             services.AddTransient<IUserAppService, UserAppService>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                // options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-                options.UseSqlServer(Configuration.GetConnectionString("AzureConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                // options.UseSqlServer(Configuration.GetConnectionString("AzureConnection")));
 
             services.AddIdentity<User, UserRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

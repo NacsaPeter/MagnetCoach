@@ -4,13 +4,14 @@ import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import * as jwt_decode from 'jwt-decode';
 import { ILoginUserDto } from '../dtos/user-dto.model';
+import { concatMap, catchError, finalize } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.page.component.html'
 })
 export class LoginPageComponent {
-
 
     constructor(
         private userService: UserService,
@@ -22,21 +23,15 @@ export class LoginPageComponent {
         password: ''
     };
     isLoginError = false;
+    isLoading: boolean;
 
     LoginUser() {
-        this.userService.loginUser(this.user).subscribe(
-            (response: any) => {
-                this.successLogin(response);
-                localStorage.setItem('loginType', 'register');
-            },
-            (err: HttpErrorResponse) => {
-                if (err.status === 400) {
-                    this.isLoginError = true;
-                } else {
-                    throw err;
-                }
-            }
-        );
+        this.isLoading = true;
+        this.userService.loginUser(this.user).pipe(
+            concatMap(response => of(this.successLogin(response))),
+            catchError(e => of(this.isLoginError = true)),
+            finalize(() => this.isLoading = false)
+        ).subscribe();
     }
 
     successLogin(response: any) {

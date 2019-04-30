@@ -1,4 +1,7 @@
 <div style="position: relative;">
+    <div class="table-loading-indicator arena-loading-indicator" *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
+    </div>
 
     <div class="pitch mat-elevation-z8" id="paper" [ngClass]="{
         'football': currentSport && currentSport.name === 'Football',

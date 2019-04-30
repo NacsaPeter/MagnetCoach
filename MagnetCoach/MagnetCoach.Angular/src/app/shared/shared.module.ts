@@ -7,9 +7,16 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DeleteItemComponent } from './components/delete-item.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    DeleteItemComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,6 +27,10 @@ import { MatInputModule } from '@angular/material/input';
     MatSelectModule,
     MatIconModule,
     MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
   ],
   exports: [
     CommonModule,
@@ -31,6 +42,14 @@ import { MatInputModule } from '@angular/material/input';
     MatSelectModule,
     MatIconModule,
     MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    DeleteItemComponent,
+  ],
+  entryComponents: [
+    DeleteItemComponent,
   ]
 })
 export class SharedModule { }

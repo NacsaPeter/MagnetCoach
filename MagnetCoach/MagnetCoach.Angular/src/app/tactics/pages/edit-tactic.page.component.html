@@ -1,4 +1,7 @@
 <div style="position: relative;">
+    <div class="table-loading-indicator arena-loading-indicator" *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
+    </div>
 
     <div class="pitch mat-elevation-z8" id="paper" [ngClass]="{
             'football': tactic && tactic.sportName === 'Football',
@@ -31,7 +34,8 @@
             <mat-checkbox [(ngModel)]="showRoutes" (change)="changeShowRoutes()"></mat-checkbox>
         </div>
         <div>
-            <button style="margin: 40px 0px 30px 330px;" mat-raised-button class="create-button" (click)="saveTactic()">Save</button>
+            <button style="margin: 40px 0px 30px 330px;" mat-raised-button class="create-button"
+                (click)="saveTactic()">Save</button>
         </div>
     </div>
 </div>

@@ -41,13 +41,27 @@ namespace MagnetCoach.API.Controllers
         }
 
         [HttpPut("{userId}/{tacticId}")]
-        public async Task<ActionResult> UpdateTactic([FromBody]TacticDto tactic, int userId, int tacticId)
+        public async Task<ActionResult<TacticDto>> UpdateTactic([FromBody]TacticDto tactic, int userId, int tacticId)
         {
             if (tactic.Id != tacticId)
             {
                 return BadRequest();
             }
-            await tacticAppService.SaveTacticAsync(tactic);
+            return Ok(await tacticAppService.SaveTacticAsync(tactic));
+            
+        }
+
+        [HttpDelete("{userId}/{tacticId}")]
+        public async Task<ActionResult> DeleteTactic(int userId, int tacticId)
+        {
+            await tacticAppService.DeleteTacticAsync(tacticId);
+            return Ok();
+        }
+
+        [HttpDelete("{userId}/{tacticId}/{frameId}")]
+        public async Task<ActionResult> DeleteFrame(int userId, int tacticId, int frameId)
+        {
+            await tacticAppService.DeleteFrameAsync(frameId);
             return Ok();
         }
     }

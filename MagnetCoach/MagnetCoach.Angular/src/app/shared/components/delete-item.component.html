@@ -1,0 +1,11 @@
+<div>
+    Are you sure to remove this item: {{ data.itemName }}?
+</div>
+<div style="margin-top: 30px;">
+    <button mat-raised-button [mat-dialog-close]="data.item" style="background: limegreen; color: white; display: inline-block;">
+        Remove
+    </button>
+    <button mat-raised-button mat-dialog-close style="display: inline-block; margin-left: 20px;">
+        Close
+    </button>
+</div>

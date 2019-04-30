@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { IRegisterUserDto } from '../dtos/user-dto.model';
+import { concatMap, catchError, finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-register',
@@ -20,6 +21,7 @@ export class RegisterPageComponent {
     };
 
     errorMessage: string;
+    isLoading: boolean;
 
     constructor(
         private userService: UserService,
@@ -27,12 +29,12 @@ export class RegisterPageComponent {
     ) {}
 
     registerUser() {
-        this.userService.registerUser(this.user).subscribe(() => {
-            this.router.navigate(['/login']);
-        }, (e) => {
-            if (e.status === 400) {
-                this.errorMessage = e.error;
-            }
-        });
+        this.isLoading = true;
+        this.userService.registerUser(this.user).pipe(
+            concatMap(() => this.router.navigate(['/login'])),
+            catchError(err => this.errorMessage = err.error),
+            finalize(() => this.isLoading = false)
+        )
+        .subscribe();
     }
 }

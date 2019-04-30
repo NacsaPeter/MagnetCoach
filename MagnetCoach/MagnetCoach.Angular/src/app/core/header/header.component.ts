@@ -23,4 +23,8 @@ export class HeaderComponent {
     localStorage.clear();
     this.router.navigateByUrl('/login');
   }
+
+  loggedIn(): boolean {
+    return !!localStorage.getItem('userId');
+  }
 }

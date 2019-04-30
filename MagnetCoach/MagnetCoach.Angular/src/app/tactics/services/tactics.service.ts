@@ -16,6 +16,14 @@ export class TacticsService {
         private http: HttpClient,
     ) { }
 
+    deleteTactic = (userId: number, tacticId: number): Observable<any> =>
+        this.http.delete(`${baseUrl}/api/tactic/${userId}/${tacticId}`,
+            { headers: new HttpHeaders({ Authorization: 'Bearer ' + localStorage.getItem('userToken')}) })
+
+    deleteFrame = (userId: number, tacticId: number, frameId: number): Observable<any> =>
+        this.http.delete(`${baseUrl}/api/tactic/${userId}/${tacticId}/${frameId}`,
+            { headers: new HttpHeaders({ Authorization: 'Bearer ' + localStorage.getItem('userToken')}) })
+
     getTactics = (userId: number): Observable<ITacticsListViewModel> =>
         this.http.get<IUserTacticListDto>(`${baseUrl}/api/tactic/${userId}`,
             { headers: new HttpHeaders({ Authorization: 'Bearer ' + localStorage.getItem('userToken')}) }

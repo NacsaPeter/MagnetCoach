@@ -6,7 +6,7 @@ import { ICreateTacticViewModel, IPlayerViewModel } from '../models/sport.enum';
 import { ISportsViewModel, ISportDetailsViewModel, IColorViewModel, IFormationViewModel } from '../models/sports.model';
 import { SportsService } from '../services/sports.service';
 import { TacticsService } from '../services/tactics.service';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -25,6 +25,8 @@ export class NewTacticPageComponent implements OnInit {
   ownTeam: any[];
   opponentTeam: any[];
   ball: any;
+
+  isLoading: boolean;
 
   tactic: ICreateTacticViewModel = {
     id: 0,
@@ -86,7 +88,10 @@ export class NewTacticPageComponent implements OnInit {
       gridSize: 1
     });
 
-    this.sportsService.getSports().subscribe(res => {
+    this.isLoading = true;
+    this.sportsService.getSports().pipe(
+      finalize(() => this.isLoading = false)
+    ).subscribe(res => {
       this.vm = res;
       this.ownTeamPossibleColors = [...res.colors];
       this.opponentTeamPossibleColors = [...res.colors];
@@ -279,6 +284,7 @@ export class NewTacticPageComponent implements OnInit {
   }
 
   createTactic() {
+    this.isLoading = true;
     for (let i = 0; i < this.tactic.frame.ownTeam.numberOfPlayers; i++) {
       const playerCell = this.graph.getCell(this.ownTeam[i]);
       const newPlayer: IPlayerViewModel = {
@@ -304,7 +310,8 @@ export class NewTacticPageComponent implements OnInit {
     this.tactic.sportId = this.currentSport.id;
     this.tacticsService.createTactic(+localStorage.getItem('userId'), this.tactic).pipe(
       map(res => this.router.navigateByUrl('/tactics')),
-      catchError(err => of(console.log(err)))
+      catchError(err => of(console.log(err))),
+      finalize(() => this.isLoading = false)
     ).subscribe();
   }
 

@@ -1,50 +1,63 @@
-<div class="sign-up-container mat-elevation-z8">
-    <form name="form" (ngSubmit)="f.form.valid && registerUser()" #f="ngForm" novalidate>
-        <div>
-            <mat-form-field>
-                <input name="UserName" matInput class="register-input" type="text" placeholder="Username"
-                    [(ngModel)]="user.userName" #UserName="ngModel"
-                    [ngClass]="{ 'is-invalid': f.submitted && UserName.invalid }" required>
-            </mat-form-field>
+<div class="sign-up-container mat-elevation-z8" style="max-height: 400px;">
+    <div style="position: relative;">
+        <div class="table-loading-indicator" *ngIf="isLoading" style="margin: -60px -40px;">
+            <mat-spinner></mat-spinner>
         </div>
-        <div>
-            <mat-form-field style="width: 60px; margin-right: 10px;">
-                <input name="Prefix" matInput class="register-input" type="text" placeholder="Prefix"
-                    [(ngModel)]="user.prefix" #Prefix="ngModel"
-                    [ngClass]="{ 'is-invalid': f.submitted && Prefix.invalid }">
-            </mat-form-field>
-            <mat-form-field style="width: 110px; margin-right: 10px;">
-                <input name="FirstName" matInput class="register-input" type="text" placeholder="First name"
-                    [(ngModel)]="user.firstName" #FirstName="ngModel"
-                    [ngClass]="{ 'is-invalid': f.submitted && FirstName.invalid }" required>
-            </mat-form-field>
-            <mat-form-field style="width: 110px;">
-                <input name="LastName" matInput class="register-input" type="text" placeholder="Last name"
-                    [(ngModel)]="user.lastName" #LastName="ngModel"
-                    [ngClass]="{ 'is-invalid': f.submitted && FirstName.invalid }" required>
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <input name="Email" matInput class="register-input" type="text" placeholder="Email"
-                    [(ngModel)]="user.email" #Email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Email.invalid }"
-                    required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field>
-                <input name="Password" matInput class="register-input" type="password" placeholder="Password"
-                    [(ngModel)]="user.password" #Password="ngModel"
-                    [ngClass]="{ 'is-invalid': f.submitted && Password.invalid }" required minlength="6">
-            </mat-form-field>
-        </div>
-        <div style="color: red; margin: 20px 0px 20px 0px; height: 14px;">
-            <span *ngIf="errorMessage">{{errorMessage}}</span>
-        </div>
-        <div class="button-container">
-            <button mat-raised-button>
-                Register
-            </button>
-        </div>
-    </form>
+        <form name="form" (ngSubmit)="f.form.valid && registerUser()" #f="ngForm" novalidate>
+            <div>
+                <mat-form-field>
+                    <input name="UserName" matInput class="register-input" type="text" placeholder="Username"
+                        [(ngModel)]="user.userName" #UserName="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && UserName.invalid }" required>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field style="width: 60px; margin-right: 10px;">
+                    <input name="Prefix" matInput class="register-input" type="text" placeholder="Prefix"
+                        [(ngModel)]="user.prefix" #Prefix="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && Prefix.invalid }">
+                </mat-form-field>
+                <mat-form-field style="width: 110px; margin-right: 10px;">
+                    <input name="FirstName" matInput class="register-input" type="text" placeholder="First name"
+                        [(ngModel)]="user.firstName" #FirstName="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && FirstName.invalid }" required>
+                </mat-form-field>
+                <mat-form-field style="width: 110px;">
+                    <input name="LastName" matInput class="register-input" type="text" placeholder="Last name"
+                        [(ngModel)]="user.lastName" #LastName="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && FirstName.invalid }" required>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input name="Email" matInput class="register-input" type="text" placeholder="Email"
+                        [(ngModel)]="user.email" #Email="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && Email.invalid }" required
+                        pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input name="Password" matInput class="register-input" type="password" placeholder="Password"
+                        [(ngModel)]="user.password" #Password="ngModel"
+                        [ngClass]="{ 'is-invalid': f.submitted && Password.invalid }" required minlength="6">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field>
+                    <input matInput [matDatepicker]="birthdayDatepicker" placeholder="Birthday">
+                    <mat-datepicker-toggle matSuffix [for]="birthdayDatepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #birthdayDatepicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div style="color: red; margin: 20px 0px 20px 0px; height: 14px;">
+                <span *ngIf="errorMessage">{{errorMessage}}</span>
+            </div>
+            <div class="button-container">
+                <button mat-raised-button>
+                    Register
+                </button>
+            </div>
+        </form>
+    </div>
 </div>

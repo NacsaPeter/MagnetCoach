@@ -5,6 +5,7 @@ import * as joint from 'node_modules/jointjs/dist/joint.js';
 import { IFrameViewModel, ITacticViewModel, ITeamViewModel, IPlayerViewModel } from '../models/sport.enum';
 import { TacticsService } from '../services/tactics.service';
 import { ActivatedRoute } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     templateUrl: './edit-tactic.page.component.html'
@@ -23,6 +24,8 @@ export class EditTacticPageComponent implements OnInit {
     currentFrame: IFrameViewModel;
 
     showRoutes: boolean;
+
+    isLoading: boolean;
 
     constructor(
         private route: ActivatedRoute,
@@ -43,7 +46,12 @@ export class EditTacticPageComponent implements OnInit {
           gridSize: 1
         });
 
-        this.service.getTactic(+localStorage.getItem('userId'), +this.route.snapshot.paramMap.get('id')).subscribe(res => {
+        const userId = +localStorage.getItem('userId');
+        const tacticId = +this.route.snapshot.paramMap.get('id');
+        this.isLoading = true;
+        this.service.getTactic(userId, tacticId).pipe(
+            finalize(() => this.isLoading = false)
+        ).subscribe(res => {
             this.tactic = res;
             this.currentFrame = this.tactic.frames[0];
             this.setUpFrame();
@@ -230,13 +238,13 @@ export class EditTacticPageComponent implements OnInit {
                 const ball = new joint.shapes.basic.Circle({
                     position: { ...lastFrame.ball.position },
                     size: { width: lastFrame.ball.size, height: lastFrame.ball.size },
-                    attrs: { circle: { fill: 'black', opacity: lastFrame.ball.visible ? 0.5 : 0 } }
+                    attrs: { circle: { fill: lastFrame.ball.color.shirtColor, opacity: lastFrame.ball.visible ? 0.5 : 0 } }
                 });
                 this.graph.addCell(ball);
                 const ballLink = new joint.shapes.standard.Link({
                     source: this.ball,
                     target: ball,
-                    attrs: { line: { stroke: 'black', strokeWidth: 3, strokeDasharray: '3 3' } },
+                    attrs: { line: { stroke: lastFrame.ball.color.shirtColor, strokeWidth: 3, strokeDasharray: '3 3' } },
                     vertices: ballLinkVertices,
                     connector: { name: 'rounded' },
                     smooth: true
@@ -256,37 +264,37 @@ export class EditTacticPageComponent implements OnInit {
                     newPlayer.translate(position.x, position.y);
                     newPlayer.attr('text/text', i);
                     if (i === 1 && !lastFrame.ownTeam.emptyGoal) {
-                        newPlayer.attr('circle/fill', 'yellow');
-                        newPlayer.attr('text/fill', 'black');
+                        newPlayer.attr('circle/fill', lastFrame.ownTeam.color.shirtColor);
+                        newPlayer.attr('text/fill', lastFrame.ownTeam.color.numberColor);
                     }
                     this.graph.addCell(newPlayer);
                     const oldPlayer = this.ownTeam[i - 1];
                     const link = new joint.shapes.standard.Link({
                         source: oldPlayer,
                         target: newPlayer,
-                        attrs: { line: { stroke: lastFrame.ownTeam.color, strokeWidth: 3 } },
+                        attrs: { line: { stroke: lastFrame.ownTeam.color.shirtColor, strokeWidth: 3 } },
                         vertices: ownTeamLinkVertices[i - 1],
                         connector: { name: 'rounded' },
                         smooth: true
                     });
                     this.graph.addCell(link);
                 }
-                player.attr('circle/fill', lastFrame.opponentTeam.color);
+                player.attr('circle/fill', lastFrame.opponentTeam.color.shirtColor);
                 for (let i = 1; i <= lastFrame.opponentTeam.players.length; i++) {
                     const newPlayer = player.clone() as joint.shapes.basic.Circle;
                     const position = { ...lastFrame.opponentTeam.players[i - 1].position };
                     newPlayer.translate(position.x, position.y);
                     newPlayer.attr('text/text', i);
                     if (i === 1 && !lastFrame.opponentTeam.emptyGoal) {
-                        newPlayer.attr('circle/fill', 'yellow');
-                        newPlayer.attr('text/fill', 'black');
+                        newPlayer.attr('circle/fill', lastFrame.opponentTeam.goalKeeperColor.shirtColor);
+                        newPlayer.attr('text/fill', lastFrame.opponentTeam.goalKeeperColor.numberColor);
                     }
                     this.graph.addCell(newPlayer);
                     const oldPlayer = this.opponentTeam[i - 1];
                     const link = new joint.shapes.standard.Link({
                         source: oldPlayer,
                         target: newPlayer,
-                        attrs: { line: { stroke: lastFrame.opponentTeam.color, strokeWidth: 3 } },
+                        attrs: { line: { stroke: lastFrame.opponentTeam.color.shirtColor, strokeWidth: 3 } },
                         vertices: opponentTeamLinkVertices[i - 1],
                         connector: { name: 'rounded' },
                         smooth: true
@@ -306,7 +314,11 @@ export class EditTacticPageComponent implements OnInit {
         for (let i = 0; i < this.tactic.frames.length; i++) {
             this.tactic.frames[i].order = i + 1;
         }
-        this.service.saveTactic(this.tactic, +localStorage.getItem('userId'), this.tactic.id).subscribe();
+        const userId = +localStorage.getItem('userId');
+        this.isLoading = true;
+        this.service.saveTactic(this.tactic, userId, this.tactic.id).pipe(
+            finalize(() => this.isLoading = false)
+        ).subscribe();
     }
 
 }

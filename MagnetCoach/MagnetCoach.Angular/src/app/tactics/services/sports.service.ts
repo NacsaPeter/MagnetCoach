@@ -5,8 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ISportsDto, IColorDto, ISportDetailsDto, IFormationDto } from '../dtos/sports-dto.model';
 import { ISportsViewModel, IColorViewModel, ISportDetailsViewModel, IFormationViewModel } from '../models/sports.model';
 
-// export const baseUrl = 'https://localhost:5001';
-export const baseUrl = 'https://magnetcoachapi.azurewebsites.net';
+export const baseUrl = 'https://localhost:5001';
+// export const baseUrl = 'https://magnetcoachapi.azurewebsites.net';
 
 @Injectable()
 export class SportsService {

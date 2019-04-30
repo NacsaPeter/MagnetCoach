@@ -2,10 +2,10 @@
     <div class="header-element app-title">
         <a (click)="navigateHome()">Magnet Coach</a>
     </div>
-    <div class="header-element">
+    <div class="header-element" *ngIf="loggedIn()">
         <a (click)="navigateTactics()">Tactics</a>
     </div>
-    <div class="header-element log-out">
+    <div class="header-element log-out" *ngIf="loggedIn()">
         <a (click)="logOut()">Log out</a>
     </div>
 </div>

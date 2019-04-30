@@ -14,7 +14,7 @@
             
             th {
                 padding: 20px 30px;
-                min-width: 180px;
+                min-width: 140px;
                 font-size: 14px;
                 font-weight: $semi-bold;
                 color: rgba(#000, 0.6);
@@ -34,7 +34,6 @@
                 }
 
                 &:hover {
-                    cursor: pointer;
                     box-shadow: 2px 3px 12px darkolivegreen;
                 }
             }

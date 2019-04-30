@@ -1,25 +1,37 @@
 <div class="table-container">
     <button mat-raised-button class="new-tactic" (click)="newTactic()">New tactic</button>
     <table class="mat-elevation-z8">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Sport</th>
-                <th>Arena part</th>
-                <th>Own players</th>
-                <th>Opponent players</th>
-                <th>Empty goal</th> 
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of list.items" (click)="navigateEdit(item.id)">
-                <td>{{ item.name }}</td>
-                <td>{{ item.sport }}</td>
-                <td>{{ item.arenaPart }}</td>
-                <td>{{ item.ownPlayers }}</td>
-                <td>{{ item.opponentPlayers }}</td>
-                <td><mat-icon>{{ item.emptyGoal ? 'check_box' : 'check_box_outline_blank' }}</mat-icon></td>
-            </tr>
-        </tbody>
+        <div style="position: relative;">
+            <div class="table-loading-indicator" *ngIf="isLoading">
+                <mat-spinner></mat-spinner>
+            </div>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Sport</th>
+                    <th>Arena part</th>
+                    <th>Own players</th>
+                    <th>Opponent players</th>
+                    <th>Empty goal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of list.items">
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.sport }}</td>
+                    <td>{{ item.arenaPart }}</td>
+                    <td>{{ item.ownPlayers }}</td>
+                    <td>{{ item.opponentPlayers }}</td>
+                    <td>
+                        <mat-icon>{{ item.emptyGoal ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
+                    </td>
+                    <td>
+                        <button mat-raised-button style="margin-right: 20px;" (click)="navigateEdit(item.id)">Edit</button>
+                        <button mat-raised-button style="margin-right: 20px;" (click)="deleteTactic(item)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </div>
     </table>
 </div>
