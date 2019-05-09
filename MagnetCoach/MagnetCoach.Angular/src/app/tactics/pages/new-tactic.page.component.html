@@ -1,152 +1,164 @@
 <div style="position: relative;">
-    <div class="table-loading-indicator arena-loading-indicator" *ngIf="isLoading">
-        <mat-spinner></mat-spinner>
-    </div>
+    <div class="tactic-container">
+        <div style="position: relative; margin: 0px 10px 30px;">
+            <div class="table-loading-indicator arena-loading-indicator" *ngIf="isLoading">
+                <mat-spinner></mat-spinner>
+            </div>
 
-    <div class="pitch mat-elevation-z8" id="paper" [ngClass]="{
-        'football': currentSport && currentSport.name === 'Football',
-        'basketball': currentSport && currentSport.name === 'Basketball',
-        'handball': currentSport && currentSport.name === 'Handball',
-        'ice-hockey': currentSport && currentSport.name === 'Ice Hockey',
-        'american-football': currentSport && currentSport.name === 'American Football',
-        'futsal': currentSport && currentSport.name === 'Futsal',
-        'floorball': currentSport && currentSport.name === 'Floorball',
-        'rugby': currentSport && currentSport.name === 'Rugby',
-        'waterpolo': currentSport && currentSport.name === 'Waterpolo',
-        'lawn-hockey': currentSport && currentSport.name === 'Lawn Hockey',
-        'endzone': tactic.pitchPart === 'Endzone'
-    }"></div>
+            <div class="arena-container">
+                <div class="pitch mat-elevation-z8" id="paper" [ngClass]="{
+                    'football': currentSport && currentSport.name === 'Football',
+                    'basketball': currentSport && currentSport.name === 'Basketball',
+                    'handball': currentSport && currentSport.name === 'Handball',
+                    'ice-hockey': currentSport && currentSport.name === 'Ice Hockey',
+                    'american-football': currentSport && currentSport.name === 'American Football',
+                    'futsal': currentSport && currentSport.name === 'Futsal',
+                    'floorball': currentSport && currentSport.name === 'Floorball',
+                    'rugby': currentSport && currentSport.name === 'Rugby',
+                    'waterpolo': currentSport && currentSport.name === 'Waterpolo',
+                    'lawn-hockey': currentSport && currentSport.name === 'Lawn Hockey',
+                    'endzone': tactic.pitchPart === 'Endzone'
+                }"></div>
+            </div>
 
-    <div class="actions-container mat-elevation-z8">
-        <div>
-            <mat-form-field>
-                <input matInput placeholder="Enter tactic name" spellcheck="false" [(ngModel)]="tactic.name">
-            </mat-form-field>
-        </div>
-        <div *ngIf="vm">
-            <mat-form-field style="margin-right: 20px;">
-                <mat-select placeholder="Select sport" [(ngModel)]="currentSport" (selectionChange)="changeSport()">
-                    <mat-option *ngFor="let s of vm.sports" [value]="s">{{ s.name }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select placeholder="Select part" [(ngModel)]="tactic.pitchPart">
-                    <mat-option [value]="'Full'">Full</mat-option>
-                    <mat-option [value]="'Endzone'">Endzone</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div>
-            <mat-form-field style="margin-right: 20px;">
-                <mat-select placeholder="Select own team color" [(ngModel)]="tactic.frame.ownTeam.color"
-                    (selectionChange)="changeTeamColor(true)">
-                    <mat-option *ngFor="let color of ownTeamPossibleColors" [value]="color">{{ color.shirtColor }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select placeholder="Select opponent team color" [(ngModel)]="tactic.frame.opponentTeam.color"
-                    (selectionChange)="changeTeamColor(false)">
-                    <mat-option *ngFor="let color of opponentTeamPossibleColors" [value]="color">{{ color.shirtColor }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div *ngIf="currentSport && currentSport.hasGoalkeeper">
-            <mat-form-field style="margin-right: 20px;">
-                <mat-select placeholder="Select own goalkeeper color" [(ngModel)]="tactic.frame.ownTeam.goalKeeperColor"
-                    (selectionChange)="changeGoalkeeperColor(true)">
-                    <mat-option *ngFor="let color of ownGoalkeeperPossibleColors" [value]="color">{{ color.shirtColor }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-select placeholder="Select opponent goalkeeper color"
-                    [(ngModel)]="tactic.frame.opponentTeam.goalKeeperColor"
-                    (selectionChange)="changeGoalkeeperColor(false)">
-                    <mat-option *ngFor="let color of opponentGoalkeeperPossibleColors" [value]="color">
-                        {{ color.shirtColor }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div *ngIf="currentSport && currentSport.formations.length !== 0">
-            <mat-form-field style="margin-right: 20px;">
-                <mat-select placeholder="Select team" [(ngModel)]="formationTeam">
-                    <mat-option [value]="ownTeam">Own team</mat-option>
-                    <mat-option [value]="opponentTeam">Opponent team</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field style="margin-right: 20px;">
-                <mat-select placeholder="Select formation" [(ngModel)]="formation">
-                    <ng-container *ngIf="currentSport">
-                        <mat-option *ngFor="let form of currentSport.formations" [value]="form">{{ form.name }}
-                        </mat-option>
-                    </ng-container>
-                </mat-select>
-            </mat-form-field>
-            <button mat-icon-button (click)="applyFormation()">
-                <mat-icon>send</mat-icon>
-            </button>
-        </div>
-        <div>
-            <mat-form-field style="margin-right: 20px;">
-                <mat-select placeholder="Select own team color" [(ngModel)]="tactic.frame.ball.color"
-                    (selectionChange)="changeBallColor()">
-                    <mat-option *ngFor="let color of ballPossibleColors" [value]="color">{{ color.shirtColor }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <span style="margin-right: 15px;">Ball visible:</span>
-            <mat-checkbox [(ngModel)]="tactic.frame.ball.visible" (change)="changeBallVisible()"></mat-checkbox>
-        </div>
-        <div *ngIf="currentSport && currentSport.hasEmptyGoal" style="margin-top: 10px;">
-            <span style="margin-right: 15px;">Own empty goal:</span>
-            <mat-checkbox [(ngModel)]="tactic.frame.ownTeam.emptyGoal" (change)="changeOwnEmptyGoal()"
-                style="margin-right: 50px;"></mat-checkbox>
-            <span style="margin-right: 15px;">Opponent empty goal:</span>
-            <mat-checkbox [(ngModel)]="tactic.frame.opponentTeam.emptyGoal" (change)="changeOpponentEmptyGoal()">
-            </mat-checkbox>
-        </div>
-        <div style="margin-top: 15px;">
-            <span style="margin-right: 47px;">Own players:</span>
-            <button mat-icon-button (click)="removePlayer(true)">
-                <mat-icon>remove</mat-icon>
-            </button>
-            {{ tactic.frame.ownTeam.numberOfPlayers }}
-            <button mat-icon-button (click)="addPlayer(true)">
-                <mat-icon>add</mat-icon>
-            </button>
-        </div>
-        <div>
-            <span style="margin-right: 15px;">Opponent players:</span>
-            <button mat-icon-button (click)="removePlayer(false)">
-                <mat-icon>remove</mat-icon>
-            </button>
-            {{ tactic.frame.opponentTeam.numberOfPlayers }}
-            <button mat-icon-button (click)="addPlayer(false)">
-                <mat-icon>add</mat-icon>
-            </button>
-        </div>
-        <div style="margin-top: 20px;">
-            <span style="margin-right: 15px;">Players' size:</span>
-            <button mat-mini-fab style="margin-right: 10px;" (click)="decreasePlayerSize()">
-                <mat-icon>remove</mat-icon>
-            </button>
-            <button mat-mini-fab style="margin-right: 40px;" (click)="increasePlayerSize()">
-                <mat-icon>add</mat-icon>
-            </button>
-            <span style="margin-right: 15px;">Ball's size:</span>
-            <button mat-mini-fab style="margin-right: 10px;" (click)="decreaseBallSize()">
-                <mat-icon>remove</mat-icon>
-            </button>
-            <button mat-mini-fab (click)="increaseBallSize()">
-                <mat-icon>add</mat-icon>
-            </button>
-        </div>
-        <div>
-            <button style="margin: 30px 0px 30px 330px;" mat-raised-button class="create-button"
-                (click)="createTactic()">Create</button>
+            <div class="actions-container mat-elevation-z8">
+                <div>
+                    <mat-form-field>
+                        <input matInput placeholder="Enter tactic name" spellcheck="false" [(ngModel)]="tactic.name">
+                    </mat-form-field>
+                </div>
+                <div *ngIf="vm">
+                    <mat-form-field style="margin-right: 20px;">
+                        <mat-select placeholder="Select sport" [(ngModel)]="currentSport"
+                            (selectionChange)="changeSport()">
+                            <mat-option *ngFor="let s of vm.sports" [value]="s">{{ s.name }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select placeholder="Select part" [(ngModel)]="tactic.pitchPart">
+                            <mat-option [value]="'Full'">Full</mat-option>
+                            <mat-option [value]="'Endzone'">Endzone</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field style="margin-right: 20px;">
+                        <mat-select placeholder="Select own team color" [(ngModel)]="tactic.frame.ownTeam.color"
+                            (selectionChange)="changeTeamColor(true)">
+                            <mat-option *ngFor="let color of ownTeamPossibleColors" [value]="color">
+                                {{ color.shirtColor }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select placeholder="Select opponent team color"
+                            [(ngModel)]="tactic.frame.opponentTeam.color" (selectionChange)="changeTeamColor(false)">
+                            <mat-option *ngFor="let color of opponentTeamPossibleColors" [value]="color">
+                                {{ color.shirtColor }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="currentSport && currentSport.hasGoalkeeper">
+                    <mat-form-field style="margin-right: 20px;">
+                        <mat-select placeholder="Select own goalkeeper color"
+                            [(ngModel)]="tactic.frame.ownTeam.goalKeeperColor"
+                            (selectionChange)="changeGoalkeeperColor(true)">
+                            <mat-option *ngFor="let color of ownGoalkeeperPossibleColors" [value]="color">
+                                {{ color.shirtColor }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select placeholder="Select opponent goalkeeper color"
+                            [(ngModel)]="tactic.frame.opponentTeam.goalKeeperColor"
+                            (selectionChange)="changeGoalkeeperColor(false)">
+                            <mat-option *ngFor="let color of opponentGoalkeeperPossibleColors" [value]="color">
+                                {{ color.shirtColor }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="currentSport && currentSport.formations.length !== 0">
+                    <mat-form-field style="margin-right: 20px;">
+                        <mat-select placeholder="Select team" [(ngModel)]="formationTeam">
+                            <mat-option [value]="ownTeam">Own team</mat-option>
+                            <mat-option [value]="opponentTeam">Opponent team</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field style="margin-right: 20px;">
+                        <mat-select placeholder="Select formation" [(ngModel)]="formation">
+                            <ng-container *ngIf="currentSport">
+                                <mat-option *ngFor="let form of currentSport.formations" [value]="form">{{ form.name }}
+                                </mat-option>
+                            </ng-container>
+                        </mat-select>
+                    </mat-form-field>
+                    <button mat-icon-button (click)="applyFormation()">
+                        <mat-icon>send</mat-icon>
+                    </button>
+                </div>
+                <div>
+                    <mat-form-field style="margin-right: 20px;">
+                        <mat-select placeholder="Select own team color" [(ngModel)]="tactic.frame.ball.color"
+                            (selectionChange)="changeBallColor()">
+                            <mat-option *ngFor="let color of ballPossibleColors" [value]="color">{{ color.shirtColor }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <span style="margin-right: 15px;">Ball visible:</span>
+                    <mat-checkbox [(ngModel)]="tactic.frame.ball.visible" (change)="changeBallVisible()"></mat-checkbox>
+                </div>
+                <div *ngIf="currentSport && currentSport.hasEmptyGoal" style="margin-top: 10px;">
+                    <span style="margin-right: 15px;">Own empty goal:</span>
+                    <mat-checkbox [(ngModel)]="tactic.frame.ownTeam.emptyGoal" (change)="changeOwnEmptyGoal()"
+                        style="margin-right: 50px;"></mat-checkbox>
+                    <span style="margin-right: 15px;">Opponent empty goal:</span>
+                    <mat-checkbox [(ngModel)]="tactic.frame.opponentTeam.emptyGoal"
+                        (change)="changeOpponentEmptyGoal()">
+                    </mat-checkbox>
+                </div>
+                <div style="margin-top: 15px;">
+                    <span style="margin-right: 47px;">Own players:</span>
+                    <button mat-icon-button (click)="removePlayer(true)">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    {{ tactic.frame.ownTeam.numberOfPlayers }}
+                    <button mat-icon-button (click)="addPlayer(true)">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <div>
+                    <span style="margin-right: 15px;">Opponent players:</span>
+                    <button mat-icon-button (click)="removePlayer(false)">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    {{ tactic.frame.opponentTeam.numberOfPlayers }}
+                    <button mat-icon-button (click)="addPlayer(false)">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <div style="margin-top: 20px;">
+                    <span style="margin-right: 15px;">Players' size:</span>
+                    <button mat-mini-fab style="margin-right: 10px;" (click)="decreasePlayerSize()">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <button mat-mini-fab style="margin-right: 40px;" (click)="increasePlayerSize()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                    <span style="margin-right: 15px;">Ball's size:</span>
+                    <button mat-mini-fab style="margin-right: 10px;" (click)="decreaseBallSize()">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <button mat-mini-fab (click)="increaseBallSize()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <div>
+                    <button style="margin: 30px 0px 30px 330px;" mat-raised-button class="create-button"
+                        (click)="createTactic()">Create</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

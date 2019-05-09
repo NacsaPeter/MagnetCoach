@@ -5,7 +5,10 @@ import * as joint from 'node_modules/jointjs/dist/joint.js';
 import { IFrameViewModel, ITacticViewModel, ITeamViewModel, IPlayerViewModel } from '../models/sport.enum';
 import { TacticsService } from '../services/tactics.service';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { finalize, map, concatMap, filter, tap, catchError } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteItemComponent } from 'src/app/shared/components/delete-item.component';
 
 @Component({
     templateUrl: './edit-tactic.page.component.html'
@@ -29,7 +32,8 @@ export class EditTacticPageComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private service: TacticsService
+        private service: TacticsService,
+        private dialog: MatDialog,
     ) {}
 
     ngOnInit() {
@@ -46,16 +50,7 @@ export class EditTacticPageComponent implements OnInit {
           gridSize: 1
         });
 
-        const userId = +localStorage.getItem('userId');
-        const tacticId = +this.route.snapshot.paramMap.get('id');
-        this.isLoading = true;
-        this.service.getTactic(userId, tacticId).pipe(
-            finalize(() => this.isLoading = false)
-        ).subscribe(res => {
-            this.tactic = res;
-            this.currentFrame = this.tactic.frames[0];
-            this.setUpFrame();
-        });
+        this.getTactic().subscribe();
     }
 
     private setUpFrame() {
@@ -67,6 +62,7 @@ export class EditTacticPageComponent implements OnInit {
         this.ownTeam = this.createTeam(this.currentFrame.ownTeam);
         this.opponentTeam = this.createTeam(this.currentFrame.opponentTeam);
 
+        this.graph.clear();
         this.graph.addCells(this.ownTeam);
         this.graph.addCells(this.opponentTeam);
         this.graph.addCell(this.ball);
@@ -134,7 +130,6 @@ export class EditTacticPageComponent implements OnInit {
             this.currentFrame = this.tactic.frames[tempFrameIndex + 1];
             this.tactic.frames[tempFrameIndex] = tempFrame;
             if (this.showRoutes) {
-                this.graph.clear();
                 this.setUpFrame();
                 this.changeShowRoutes();
             }
@@ -150,7 +145,6 @@ export class EditTacticPageComponent implements OnInit {
             this.currentFrame = this.tactic.frames[tempFrameIndex - 1];
             this.tactic.frames[tempFrameIndex] = tempFrame;
             if (this.showRoutes) {
-                this.graph.clear();
                 this.setUpFrame();
                 this.changeShowRoutes();
             }
@@ -235,16 +229,17 @@ export class EditTacticPageComponent implements OnInit {
                     }
                 }
                 const lastFrame = this.tactic.frames[this.tactic.frames.length - 1];
+                const firstFrame = this.tactic.frames[0];
                 const ball = new joint.shapes.basic.Circle({
                     position: { ...lastFrame.ball.position },
                     size: { width: lastFrame.ball.size, height: lastFrame.ball.size },
-                    attrs: { circle: { fill: lastFrame.ball.color.shirtColor, opacity: lastFrame.ball.visible ? 0.5 : 0 } }
+                    attrs: { circle: { fill: firstFrame.ball.color.shirtColor, opacity: firstFrame.ball.visible ? 0.5 : 0 } }
                 });
                 this.graph.addCell(ball);
                 const ballLink = new joint.shapes.standard.Link({
                     source: this.ball,
                     target: ball,
-                    attrs: { line: { stroke: lastFrame.ball.color.shirtColor, strokeWidth: 3, strokeDasharray: '3 3' } },
+                    attrs: { line: { stroke: firstFrame.ball.color.shirtColor, strokeWidth: 3, strokeDasharray: '3 3' } },
                     vertices: ballLinkVertices,
                     connector: { name: 'rounded' },
                     smooth: true
@@ -254,29 +249,32 @@ export class EditTacticPageComponent implements OnInit {
                     position: { x: 0, y: 0},
                     size: { width: this.tactic.playerSize, height: this.tactic.playerSize },
                     attrs: {
-                        circle: { fill: lastFrame.ownTeam.color.shirtColor, opacity: 0.5 },
-                        text: { text: '0', fill: lastFrame.ownTeam.color.numberColor }
+                        circle: { fill: firstFrame.ownTeam.color.shirtColor, opacity: 0.5 },
+                        text: { text: '0', fill: firstFrame.ownTeam.color.numberColor }
                     }
                 });
                 for (let i = 1; i <= lastFrame.ownTeam.players.length; i++) {
                     const newPlayer = player.clone() as joint.shapes.basic.Circle;
                     const position = { ...lastFrame.ownTeam.players[i - 1].position };
                     newPlayer.translate(position.x, position.y);
-                    newPlayer.attr('text/text', i);
-                    if (i === 1 && !lastFrame.ownTeam.emptyGoal) {
-                        newPlayer.attr('circle/fill', lastFrame.ownTeam.color.shirtColor);
-                        newPlayer.attr('text/fill', lastFrame.ownTeam.color.numberColor);
+                    newPlayer.attr('text/text', lastFrame.ownTeam.players[i - 1].number);
+                    if (this.tactic.hasGoalkeeper && !lastFrame.ownTeam.emptyGoal && lastFrame.ownTeam.players[i - 1].number === 1) {
+                        newPlayer.attr('circle/fill', firstFrame.ownTeam.goalKeeperColor.shirtColor);
+                        newPlayer.attr('text/fill', firstFrame.ownTeam.goalKeeperColor.numberColor);
                     }
                     this.graph.addCell(newPlayer);
                     const oldPlayer = this.ownTeam[i - 1];
                     const link = new joint.shapes.standard.Link({
                         source: oldPlayer,
                         target: newPlayer,
-                        attrs: { line: { stroke: lastFrame.ownTeam.color.shirtColor, strokeWidth: 3 } },
+                        attrs: { line: { stroke: firstFrame.ownTeam.color.shirtColor, strokeWidth: 3 } },
                         vertices: ownTeamLinkVertices[i - 1],
                         connector: { name: 'rounded' },
                         smooth: true
                     });
+                    if (this.tactic.hasGoalkeeper && !lastFrame.ownTeam.emptyGoal && lastFrame.ownTeam.players[i - 1].number === 1) {
+                        link.attr('line/stroke', firstFrame.ownTeam.goalKeeperColor.shirtColor);
+                    }
                     this.graph.addCell(link);
                 }
                 player.attr('circle/fill', lastFrame.opponentTeam.color.shirtColor);
@@ -284,27 +282,31 @@ export class EditTacticPageComponent implements OnInit {
                     const newPlayer = player.clone() as joint.shapes.basic.Circle;
                     const position = { ...lastFrame.opponentTeam.players[i - 1].position };
                     newPlayer.translate(position.x, position.y);
-                    newPlayer.attr('text/text', i);
-                    if (i === 1 && !lastFrame.opponentTeam.emptyGoal) {
-                        newPlayer.attr('circle/fill', lastFrame.opponentTeam.goalKeeperColor.shirtColor);
-                        newPlayer.attr('text/fill', lastFrame.opponentTeam.goalKeeperColor.numberColor);
+                    newPlayer.attr('text/text', lastFrame.opponentTeam.players[i - 1].number);
+                    if (this.tactic.hasGoalkeeper && !lastFrame.opponentTeam.emptyGoal
+                            && lastFrame.opponentTeam.players[i - 1].number === 1) {
+                        newPlayer.attr('circle/fill', firstFrame.opponentTeam.goalKeeperColor.shirtColor);
+                        newPlayer.attr('text/fill', firstFrame.opponentTeam.goalKeeperColor.numberColor);
                     }
                     this.graph.addCell(newPlayer);
                     const oldPlayer = this.opponentTeam[i - 1];
                     const link = new joint.shapes.standard.Link({
                         source: oldPlayer,
                         target: newPlayer,
-                        attrs: { line: { stroke: lastFrame.opponentTeam.color.shirtColor, strokeWidth: 3 } },
+                        attrs: { line: { stroke: firstFrame.opponentTeam.color.shirtColor, strokeWidth: 3 } },
                         vertices: opponentTeamLinkVertices[i - 1],
                         connector: { name: 'rounded' },
                         smooth: true
                     });
+                    if (this.tactic.hasGoalkeeper && !lastFrame.opponentTeam.emptyGoal
+                            && lastFrame.opponentTeam.players[i - 1].number === 1) {
+                        link.attr('line/stroke', firstFrame.opponentTeam.goalKeeperColor.shirtColor);
+                    }
                     this.graph.addCell(link);
                 }
             }
         } else {
             this.preservePositions();
-            this.graph.clear();
             this.setUpFrame();
         }
     }
@@ -317,6 +319,42 @@ export class EditTacticPageComponent implements OnInit {
         const userId = +localStorage.getItem('userId');
         this.isLoading = true;
         this.service.saveTactic(this.tactic, userId, this.tactic.id).pipe(
+            concatMap(() => this.getTactic()),
+            finalize(() => this.isLoading = false)
+        ).subscribe();
+    }
+
+    getTactic(): Observable<void> {
+        const userId = +localStorage.getItem('userId');
+        const tacticId = +this.route.snapshot.paramMap.get('id');
+        this.isLoading = true;
+        return this.service.getTactic(userId, tacticId).pipe(
+            map(res => {
+                this.tactic = res;
+                this.currentFrame = this.tactic.frames[0];
+                this.setUpFrame();
+            }),
+            finalize(() => this.isLoading = false)
+        );
+    }
+
+    deleteFrame() {
+        const userId = +localStorage.getItem('userId');
+        const dialogRef = this.dialog.open(DeleteItemComponent,
+            {
+                data:
+                {
+                    item: {...this.currentFrame},
+                    itemName: `Frame ${this.currentFrame.id}`
+                }
+            }
+        );
+        dialogRef.afterClosed().pipe(
+            tap(() => this.isLoading = true),
+            filter(result => !!result),
+            concatMap(result => this.service.deleteFrame(userId, this.tactic.id, this.currentFrame.id)),
+            concatMap(() => this.getTactic()),
+            catchError(err => of(console.log(err))),
             finalize(() => this.isLoading = false)
         ).subscribe();
     }

@@ -73,7 +73,7 @@ namespace MagnetCoach.Application.AppServices
                 "https://localhost:5001",
                 "https://localhost:5001",
                 claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddDays(1),
                 signingCredentials: creds
                 );
 

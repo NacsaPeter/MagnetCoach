@@ -1,36 +1,57 @@
 .table-container {
     position: relative;
+    padding: 80px 50px 20px;
 
     table {
         border-spacing: 0px;
-        margin: 0;
-        position: absolute;
-        top: 80px;
-        left: 50%;
-        transform: translate(-50%);
         background: white;
+        width: 100%;
+        position: relative;
         
         thead {
-            
-            th {
-                padding: 20px 30px;
-                min-width: 140px;
-                font-size: 14px;
-                font-weight: $semi-bold;
-                color: rgba(#000, 0.6);
-                border-bottom: 1px solid lightgray;
-                text-align: left;
+
+            tr {
+                height: 70px;
+
+                th {
+                    width: 13%;
+                    padding: 0px 10px;
+                    font-size: 14px;
+                    font-weight: $semi-bold;
+                    color: rgba(#000, 0.6);
+                    border-bottom: 1px solid lightgray;
+                    text-align: left;
+                }
+
+                th:first-child {
+                    padding-left: 30px;
+                }
+
+                th:last-child {
+                    width: 22px;
+                }
             }
+
         }
 
         tbody {
             
             tr {
+                height: 70px;
                 
                 td {
-                    padding: 15px 30px;
+                    padding: 5px 10px;
                     border-bottom: 1px solid lightgray;
                     font-size: 13px;
+                    width: 13%;
+                }
+
+                td:first-child {
+                    padding-left: 30px;
+                }
+
+                td:last-child {
+                    width: 22%;
                 }
 
                 &:hover {

@@ -4,20 +4,33 @@
 	background-position: center;
 	border: 1px solid black;
 	border-radius: 5px;
-	margin: 25px 10px 30px 10px;
 	background-color: #FFF;
 }
 
+.arena-container {
+	display: inline-block;
+	margin: 0px 10px 10px 0px;
+}
+
 .actions-container {
+	display: inline-block;
+	vertical-align: top;
 	height: 87vh;
-	position: absolute;
-	right: 10px;
-	top: 0px;
 	border-radius: 5px;
 	width: 445px;
 	border: 1px solid black;
 	padding: 20px 20px;
 	background: #FFF;
+}
+
+.tactic-container {
+	position: absolute;
+	margin: 0;
+	right: 0;
+	left: 0;
+	display: flex;
+	//align-items: center;
+	justify-content: center;
 }
 
 .mat-mini-fab {

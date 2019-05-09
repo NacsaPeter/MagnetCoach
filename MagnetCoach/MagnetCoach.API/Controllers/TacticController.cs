@@ -41,13 +41,14 @@ namespace MagnetCoach.API.Controllers
         }
 
         [HttpPut("{userId}/{tacticId}")]
-        public async Task<ActionResult<TacticDto>> UpdateTactic([FromBody]TacticDto tactic, int userId, int tacticId)
+        public async Task<ActionResult> UpdateTactic([FromBody]TacticDto tactic, int userId, int tacticId)
         {
             if (tactic.Id != tacticId)
             {
                 return BadRequest();
             }
-            return Ok(await tacticAppService.SaveTacticAsync(tactic));
+            await tacticAppService.SaveTacticAsync(tactic);
+            return Ok();
             
         }
 
