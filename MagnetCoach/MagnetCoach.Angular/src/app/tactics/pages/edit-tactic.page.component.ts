@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import * as jQuery from 'jquery';
 import * as _ from 'lodash';
 import * as joint from 'node_modules/jointjs/dist/joint.js';
-import { IFrameViewModel, ITacticViewModel, ITeamViewModel, IPlayerViewModel } from '../models/sport.enum';
+import { IFrameViewModel, ITacticViewModel, ITeamViewModel, IPlayerViewModel, IPositionViewModel } from '../models/sport.enum';
 import { TacticsService } from '../services/tactics.service';
 import { ActivatedRoute } from '@angular/router';
 import { finalize, map, concatMap, filter, tap, catchError } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteItemComponent } from 'src/app/shared/components/delete-item.component';
 
@@ -357,6 +358,91 @@ export class EditTacticPageComponent implements OnInit {
             catchError(err => of(console.log(err))),
             finalize(() => this.isLoading = false)
         ).subscribe();
+    }
+
+    play() {
+        this.setUpFrame();
+        const steps = [];
+        for (let k = 0; k < this.tactic.frames[0].ownTeam.players.length; k++) {
+            const inSteps = [];
+            for (let i = 1; i < this.tactic.frames.length; i++) {
+                const previousPosition = this.tactic.frames[i - 1].ownTeam.players[k].position;
+                const currentPostion = this.tactic.frames[i].ownTeam.players[k].position;
+                const div = 15;
+                const vec = this.createVector(currentPostion, previousPosition, div);
+                for (let j = 1; j < div; j++) {
+                    inSteps.push({ x: previousPosition.x + vec.x * j, y: previousPosition.y + vec.y * j });
+                }
+                inSteps.push({ x: currentPostion.x, y: currentPostion.y });
+            }
+            steps.push(inSteps);
+        }
+        for (let k = 0; k < this.tactic.frames[0].opponentTeam.players.length; k++) {
+            const inSteps = [];
+            for (let i = 1; i < this.tactic.frames.length; i++) {
+                const previousPosition = this.tactic.frames[i - 1].opponentTeam.players[k].position;
+                const currentPostion = this.tactic.frames[i].opponentTeam.players[k].position;
+                const div = 15;
+                const vec = this.createVector(currentPostion, previousPosition, div);
+                for (let j = 1; j < div; j++) {
+                    inSteps.push({ x: previousPosition.x + vec.x * j, y: previousPosition.y + vec.y * j });
+                }
+                inSteps.push({ x: currentPostion.x, y: currentPostion.y });
+            }
+            steps.push(inSteps);
+        }
+        const iSteps = [];
+        for (let i = 1; i < this.tactic.frames.length; i++) {
+            const previousPosition = this.tactic.frames[i - 1].ball.position;
+            const currentPostion = this.tactic.frames[i].ball.position;
+            const div = 15;
+            const vec = this.createVector(currentPostion, previousPosition, div);
+            for (let j = 1; j < div; j++) {
+                iSteps.push({ x: previousPosition.x + vec.x * j, y: previousPosition.y + vec.y * j });
+            }
+            iSteps.push({ x: currentPostion.x, y: currentPostion.y });
+        }
+        steps.push(iSteps);
+        const items = [];
+        for (const item of this.ownTeam) {
+            items.push(item);
+        }
+        for (const item of this.opponentTeam) {
+            items.push(item);
+        }
+        items.push(this.ball);
+
+        const maxLoops = steps[0].length;
+        let counter = 0;
+
+        (function next() {
+            if (counter++ >= maxLoops) { return; }
+
+            setTimeout(() => {
+                // player.position(0, 0);
+                // player.translate(steps[counter - 1].x, steps[counter - 1].y);
+                for (let i = 0; i < steps.length; i++) {
+                    items[i].position(0, 0);
+                    items[i].translate(steps[i][counter - 1].x, steps[i][counter - 1].y);
+                }
+
+                next();
+            }, 50);
+
+        })();
+    }
+
+    createVector(
+        currentPostion: IPositionViewModel,
+        previousPosition: IPositionViewModel,
+        div: number
+    ): IPositionViewModel {
+
+        return {
+            x: (currentPostion.x - previousPosition.x) / div,
+            y: (currentPostion.y - previousPosition.y) / div,
+        };
+
     }
 
 }

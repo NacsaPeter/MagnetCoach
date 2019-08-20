@@ -36,6 +36,9 @@
                 <div style="margin-top: 20px;">
                     <span style="margin-right: 15px;">Show routes:</span>
                     <mat-checkbox [(ngModel)]="showRoutes" (change)="changeShowRoutes()"></mat-checkbox>
+                    <button mat-button style="margin-left: 50px;" (click)="play()">
+                        Play <mat-icon style="margin-left: 5px;">play_arrow</mat-icon>
+                    </button>
                 </div>
                 <div style="margin-top: 20px;">
                     <button mat-button (click)="deleteFrame()">Delete frame</button>
