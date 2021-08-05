@@ -38,8 +38,8 @@ namespace MagnetCoach.Application.AppServices
                 Colors = colors.Select(x => new ColorDto
                 {
                     Id = x.Id,
-                    NumberColor = x.NumberColor,
-                    ShirtColor = x.ShirtColor
+                    PrimaryColor = x.PrimaryColor,
+                    SecondaryColor = x.SecondaryColor
                 }).ToList(),
 
                 Sports = sports.Select(x => new SportDetailsDto

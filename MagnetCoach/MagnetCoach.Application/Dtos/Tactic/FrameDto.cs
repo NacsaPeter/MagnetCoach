@@ -7,10 +7,9 @@ namespace MagnetCoach.Application.Dtos.Tactic
     public class FrameDto
     {
         public int Id { get; set; }
-        public BallDto Ball { get; set; }
-        public TeamDto OwnTeam { get; set; }
-        public TeamDto OpponentTeam { get; set; }
-        public int Order { get; set; }
+        public PositionDto BallPosition { get; set; }
+        public List<PlayerDto> OwnTeamPlayers { get; set; }
+        public List<PlayerDto> OpponentTeamPlayers { get; set; }
         public string Details { get; set; }
     }
 }

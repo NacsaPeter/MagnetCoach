@@ -17,10 +17,6 @@ namespace MagnetCoach.Domain.Models
         public int BallId { get; set; }
         public Ball Ball { get; set; }
 
-        public int? OwnTeamId { get; set; }
-        public Team OwnTeam { get; set; }
-
-        public int? OpponentTeamId { get; set; }
-        public Team OpponentTeam { get; set; }
+        public virtual ICollection<Player> Players { get; set; }
     }
 }

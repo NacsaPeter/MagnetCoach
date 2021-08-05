@@ -10,7 +10,7 @@ namespace MagnetCoach.Application.Dtos.Tactic
         public int Id { get; set; }
         public ColorDto Color { get; set; }
         public ColorDto GoalkeeperColor { get; set; }
-        public bool EmptyGoal { get; set; }
-        public List<PlayerDto> Players { get; set; }
+        public bool IsGoalEmpty { get; set; }
+        public int NumberOfPlayers { get; set; }
     }
 }

@@ -5,8 +5,8 @@ export interface ISportsDto {
 
 export interface IColorDto {
     id: number;
-    shirtColor: string;
-    numberColor: string;
+    primaryColor: string;
+    secondaryColor: string;
 }
 
 export interface ISportDetailsDto {

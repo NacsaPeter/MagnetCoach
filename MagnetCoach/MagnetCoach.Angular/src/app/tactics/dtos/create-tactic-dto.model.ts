@@ -4,12 +4,12 @@ export interface ICreateTacticDto {
     sportId: number;
     arenaPart: string;
     playerSize: number;
-    ball: ICreateBallTacticDto;
+    ball: ICreateBallDto;
     ownTeam: ICreateTeamDto;
     opponentTeam: ICreateTeamDto;
 }
 
-export interface ICreateBallTacticDto {
+export interface ICreateBallDto {
     isVisible: boolean;
     size: number;
     position: IPositionDto;
@@ -24,7 +24,8 @@ export interface IPositionDto {
 export interface ICreateTeamDto {
     colorId: number;
     goalkeeperColorId: number;
-    emptyGoal: boolean;
+    isGoalEmpty: boolean;
+    numberOfPlayers: number;
     players: ICreatePlayerDto[];
 }
 

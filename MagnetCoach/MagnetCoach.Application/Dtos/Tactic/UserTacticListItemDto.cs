@@ -10,11 +10,9 @@ namespace MagnetCoach.Application.Dtos.Tactic
         public int TacticId { get; set; }
         public string TacticName { get; set; }
         public string Sport { get; set; }
-        // public ArenaPartTypeEnum ArenaPart { get; set; }
         public string ArenaPart { get; set; }
         public int OwnPlayers { get; set; }
         public int OpponentPlayers { get; set; }
-        public bool HasEmptyGoal { get; set; }
-        public bool IsEmptyGoal { get; set; }
+        public bool IsGoalEmpty { get; set; }
     }
 }

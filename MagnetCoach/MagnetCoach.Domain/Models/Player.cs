@@ -9,9 +9,11 @@ namespace MagnetCoach.Domain.Models
     {
         public int Id { get; set; }
         public Position Position { get; set; }
-        public int Number { get; set; }
 
-        public int TeamId { get; set; }
-        public Team Team { get; set; }
+        public int CoreId { get; set; }
+        public ExistingPlayer Core { get; set; }
+
+        public int FrameId { get; set; }
+        public Frame Frame { get; set; }
     }
 }

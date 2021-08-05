@@ -20,6 +20,15 @@ namespace MagnetCoach.Domain.Models
         public int PlayerSize { get; set; }
         public string Name { get; set; }
 
+        public int BallId { get; set; }
+        public ExistingBall Ball { get; set; }
+
+        public int OwnTeamId { get; set; }
+        public Team OwnTeam { get; set; }
+
+        public int OpponentTeamId { get; set; }
+        public Team OpponentTeam { get; set; }
+
         public virtual ICollection<Frame> Frames { get; set; }
     }
 }

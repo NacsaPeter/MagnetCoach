@@ -12,6 +12,8 @@ namespace MagnetCoach.EF
     {
         public DbSet<Ball> Balls { get; set; }
         public DbSet<Color> Colors { get; set; }
+        public DbSet<ExistingBall> ExistingBalls { get; set; }
+        public DbSet<ExistingPlayer> ExistingPlayers { get; set; }
         public DbSet<Formation> Formations { get; set; }
         public DbSet<FormationLine> FormationLines { get; set; }
         public DbSet<Frame> Frames { get; set; }
@@ -33,16 +35,16 @@ namespace MagnetCoach.EF
             builder.ApplyConfiguration(new SportConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
 
-            builder.Entity<Color>().HasData(new Color { Id = 1, ShirtColor = "Red", NumberColor = "White" });
-            builder.Entity<Color>().HasData(new Color { Id = 2, ShirtColor = "Blue", NumberColor = "White" });
-            builder.Entity<Color>().HasData(new Color { Id = 3, ShirtColor = "Green", NumberColor = "White" });
-            builder.Entity<Color>().HasData(new Color { Id = 4, ShirtColor = "Yellow", NumberColor = "Black" });
-            builder.Entity<Color>().HasData(new Color { Id = 5, ShirtColor = "Purple", NumberColor = "White" });
-            builder.Entity<Color>().HasData(new Color { Id = 6, ShirtColor = "White", NumberColor = "Black" });
-            builder.Entity<Color>().HasData(new Color { Id = 7, ShirtColor = "Black", NumberColor = "White" });
-            builder.Entity<Color>().HasData(new Color { Id = 8, ShirtColor = "Orange", NumberColor = "White" });
-            builder.Entity<Color>().HasData(new Color { Id = 9, ShirtColor = "Brown", NumberColor = "White" });
-            builder.Entity<Color>().HasData(new Color { Id = 10, ShirtColor = "Pink", NumberColor = "Black" });
+            builder.Entity<Color>().HasData(new Color { Id = 1, PrimaryColor = "Red", SecondaryColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 2, PrimaryColor = "Blue", SecondaryColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 3, PrimaryColor = "Green", SecondaryColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 4, PrimaryColor = "Yellow", SecondaryColor = "Black" });
+            builder.Entity<Color>().HasData(new Color { Id = 5, PrimaryColor = "Purple", SecondaryColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 6, PrimaryColor = "White", SecondaryColor = "Black" });
+            builder.Entity<Color>().HasData(new Color { Id = 7, PrimaryColor = "Black", SecondaryColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 8, PrimaryColor = "Orange", SecondaryColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 9, PrimaryColor = "Brown", SecondaryColor = "White" });
+            builder.Entity<Color>().HasData(new Color { Id = 10, PrimaryColor = "Pink", SecondaryColor = "Black" });
 
             builder.Entity<Sport>().HasData(new Sport {
                 Id = 1,

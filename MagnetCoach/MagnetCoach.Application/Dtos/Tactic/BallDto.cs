@@ -9,8 +9,7 @@ namespace MagnetCoach.Application.Dtos.Tactic
     {
         public int Id { get; set; }
         public bool IsVisible { get; set; }
-        public PositionDto Position { get; set; }
-        public ColorDto Color { get; set; }
+        public string Color { get; set; }
         public int Size { get; set; }
     }
 }

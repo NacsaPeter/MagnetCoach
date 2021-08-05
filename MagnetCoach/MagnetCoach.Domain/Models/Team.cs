@@ -8,7 +8,8 @@ namespace MagnetCoach.Domain.Models
     public class Team : IDbEntry
     {
         public int Id { get; set; }
-        public bool EmptyGoal { get; set; }
+        public bool IsGoalEmpty { get; set; }
+        public int NumberOfPlayers { get; set; }
 
         public int? GoalKeeperColorId { get; set; }
         public Color GoalKeeperColor { get; set; }
@@ -16,6 +17,6 @@ namespace MagnetCoach.Domain.Models
         public int PlayerColorId { get; set; }
         public Color PlayerColor { get; set; }
 
-        public virtual ICollection<Player> Players { get; set; }
+        public virtual ICollection<ExistingPlayer> Players { get; set; }
     }
 }

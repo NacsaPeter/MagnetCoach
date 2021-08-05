@@ -1,9 +1,3 @@
-export interface IUserTacticListDto {
-    userId: number;
-    userName: string;
-    userTactics: IUserTacticListItemDto[];
-}
-
 export interface IUserTacticListItemDto {
     tacticId: number;
     tacticName: string;
@@ -11,6 +5,5 @@ export interface IUserTacticListItemDto {
     arenaPart: string;
     ownPlayers: number;
     opponentPlayers: number;
-    hasEmptyGoal: boolean;
-    isEmptyGoal: boolean;
+    isGoalEmpty: boolean;
 }

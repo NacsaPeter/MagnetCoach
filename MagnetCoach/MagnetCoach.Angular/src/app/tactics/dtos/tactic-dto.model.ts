@@ -7,23 +7,24 @@ export interface ITacticDto {
     hasGoalkeeper: boolean;
     arenaPart: string;
     playerSize: number;
+    ball: IBallDto;
+    ownTeam: ITeamDto;
+    opponentTeam: ITeamDto;
     frames: IFrameDto[];
 }
 
 export interface IFrameDto {
     id: number;
-    ball: IBallDto;
-    ownTeam: ITeamDto;
-    opponentTeam: ITeamDto;
-    order?: number;
+    ballPosition: IPositionDto;
+    ownTeam: IPlayerDto[];
+    opponentTeam: IPlayerDto[];
     details?: string;
 }
 
 export interface IBallDto {
     id: number;
     isVisible: boolean;
-    position: IPositionDto;
-    color: IColorDto;
+    color: string;
     size: number;
 }
 
@@ -31,8 +32,8 @@ export interface ITeamDto {
     id: number;
     color: IColorDto;
     goalkeeperColor: IColorDto;
-    emptyGoal: boolean;
-    players: IPlayerDto[];
+    isGoalEmpty: boolean;
+    numberOfPlayers: number;
 }
 
 export interface IPlayerDto {

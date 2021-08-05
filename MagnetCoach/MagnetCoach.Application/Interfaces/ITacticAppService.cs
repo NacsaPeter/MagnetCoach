@@ -8,7 +8,7 @@ namespace MagnetCoach.Application.Interfaces
 {
     public interface ITacticAppService
     {
-        Task<UserTacticListDto> GetTacticsAsync(int userId);
+        Task<List<UserTacticListItemDto>> GetTacticsAsync(int userId);
         Task CreateTacticAsync(CreateTacticDto dto);
         Task<TacticDto> GetTacticAsync(int userId, int tacticId);
         Task SaveTacticAsync(TacticDto dto);
